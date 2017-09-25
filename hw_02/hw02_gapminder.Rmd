@@ -1,0 +1,71 @@
+---
+title: "hw02_gapminder.Rmd"
+author: "Fariha Khan"
+date: '2017-09-24'
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+
+#### Work with the gapminder data we explored in class
+
+
+Load Gapminder and dplyr (via tidyverse)
+
+```{r cars}
+library(gapminder)
+library(tidyverse)
+```
+
+##### Explore the gapminder object:
+
+1. Is it a data.frame, a matrix, a vector, a list?
+```{r}
+str(gapminder)
+```
+
+2. What’s its class?
+```{r}
+class(gapminder)
+typeof(gapminder)
+```
+
+3. How many variables/columns?
+```{r}
+ncol(gapminder)
+```
+
+4. How many rows/observations?
+```{r}
+nrow(gapminder)
+```
+
+5. Can you get these facts about “extent” or “size” in more than one way? Can you imagine different functions being useful in different contexts?
+```{r}
+summary(gapminder)
+dim(gapminder)
+names(gapminder)
+length(gapminder)
+```
+
+6. What data type is each variable?
+```{r}
+str(gapminder)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
