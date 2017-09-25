@@ -6,7 +6,7 @@
 #
 ### This repository contains homework assignments for STAT-545
 
-# 
+ 
 ##### Assignments are organized into their respective directories
 
 
@@ -28,9 +28,10 @@ Example:
 | 04           |Oct 10, 2017  | Oct 16, 2017             | 
 | 05           |Oct 20, 2017  | Oct 23, 2017             | 
 
-
+#
 ### Current progress:
-### 
+
+ 
 - [x] homework 1
 - [ ] homework 2
 - [ ] homework 3
