@@ -20,8 +20,8 @@ knitr::opts_chunk$set(echo = TRUE)
 Load Gapminder and dplyr (via tidyverse)
 
 ```{r}
-library(gapminder)
-library(tidyverse)
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(gapminder))
 ```
 
 ##### Explore the gapminder object:

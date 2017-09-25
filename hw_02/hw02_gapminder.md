@@ -14,26 +14,8 @@ Load Gapminder and dplyr (via tidyverse)
 
 
 ```r
-library(gapminder)
-library(tidyverse)
-```
-
-```
-## Loading tidyverse: ggplot2
-## Loading tidyverse: tibble
-## Loading tidyverse: tidyr
-## Loading tidyverse: readr
-## Loading tidyverse: purrr
-## Loading tidyverse: dplyr
-```
-
-```
-## Conflicts with tidy packages ----------------------------------------------
-```
-
-```
-## filter(): dplyr, stats
-## lag():    dplyr, stats
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(gapminder))
 ```
 
 ##### Explore the gapminder object:
@@ -157,9 +139,11 @@ str(gapminder)
 ##  $ gdpPercap: num  779 821 853 836 740 ...
 ```
 
+
 #### Explore individual variables
+
 ##### Pick at least one categorical variable and at least one quantitative variable to explore.
-Using continent and population
+For each continent, explore the overall population data
 
 ```r
 gapminder %>% 
@@ -197,5 +181,82 @@ gapminder %>%
 ## 5   Oceania        1994794        8874672       20434176
 ```
 
+For each continent, explore which countries have the highest and lowest population
 
+```r
+gapminder %>% 
+      group_by(continent) %>%
+      select(continent, country, pop) %>%
+      top_n(1, wt = (pop)) %>% 
+      arrange(continent)
+```
+
+```
+## # A tibble: 5 x 3
+## # Groups:   continent [5]
+##   continent       country        pop
+##      <fctr>        <fctr>      <int>
+## 1    Africa       Nigeria  135031164
+## 2  Americas United States  301139947
+## 3      Asia         China 1318683096
+## 4    Europe       Germany   82400996
+## 5   Oceania     Australia   20434176
+```
+
+```r
+gapminder %>% 
+      group_by(continent) %>%
+      select(continent, country, pop) %>%
+      top_n(1, wt = desc(pop)) %>% 
+      arrange(continent)
+```
+
+```
+## # A tibble: 5 x 3
+## # Groups:   continent [5]
+##   continent               country     pop
+##      <fctr>                <fctr>   <int>
+## 1    Africa Sao Tome and Principe   60011
+## 2  Americas   Trinidad and Tobago  662850
+## 3      Asia               Bahrain  120447
+## 4    Europe               Iceland  147962
+## 5   Oceania           New Zealand 1994794
+```
+
+
+#### Plotting gapminder data using ggplot2
+1. A scatterplot of two quantitative variables.
+Look at the trend between gdpPercap and life expectancy for years after 1990
+
+```r
+year_data <- gapminder %>% 
+      filter(year >= 1990)
+
+p <- ggplot(year_data, aes(x=gdpPercap, y=lifeExp))
+p + geom_point(aes(color=continent),alpha=0.5, size=1)
+```
+
+![](hw02_gapminder_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+
+
+2. A plot of one quantitative variable
+
+```r
+p2 <- ggplot(gapminder, aes(lifeExp))
+p2 + geom_density(aes(color=continent))
+```
+
+![](hw02_gapminder_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+
+3. A plot of one quantitative variable and one categorical
+
+```r
+year2_data <- gapminder %>% 
+      filter(year %in% c(1952, 2007))
+p3 <- ggplot(year2_data, aes(x=factor(year), y=lifeExp))
+p3 + geom_boxplot(aes(fill=factor(year))) +
+      facet_grid(~ continent)
+```
+
+![](hw02_gapminder_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
 
