@@ -13,11 +13,6 @@ Fariha Khan
 Load Gapminder and dplyr (via tidyverse)
 
 
-```r
-library(gapminder)
-library(tidyverse)
-```
-
 ```
 ## Loading tidyverse: ggplot2
 ## Loading tidyverse: tibble
@@ -157,7 +152,70 @@ str(gapminder)
 ##  $ gdpPercap: num  779 821 853 836 740 ...
 ```
 
-## Including Plots
+#### Explore individual variables
+#####Pick at least one categorical variable and at least one quantitative variable to explore.
+Using continent and population
+
+```r
+gapminder %>% 
+      distinct(continent)
+```
+
+```
+## # A tibble: 5 x 1
+##   continent
+##      <fctr>
+## 1      Asia
+## 2    Europe
+## 3    Africa
+## 4  Americas
+## 5   Oceania
+```
+
+```r
+gapminder %>% 
+      group_by(continent) %>% 
+      tally()
+```
+
+```
+## # A tibble: 5 x 2
+##   continent     n
+##      <fctr> <int>
+## 1    Africa   624
+## 2  Americas   300
+## 3      Asia   396
+## 4    Europe   360
+## 5   Oceania    24
+```
+
+```r
+gapminder %>% 
+      group_by(continent) %>% 
+      summarise(min_population = min(pop),
+                avg_population = mean(pop),
+                max_population = max(pop))
+```
+
+```
+## # A tibble: 5 x 4
+##   continent min_population avg_population max_population
+##      <fctr>          <dbl>          <dbl>          <dbl>
+## 1    Africa          60011        9916003      135031164
+## 2  Americas         662850       24504795      301139947
+## 3      Asia         120447       77038722     1318683096
+## 4    Europe         147962       17169765       82400996
+## 5   Oceania        1994794        8874672       20434176
+```
+
+
+```r
+var_quant <- gapminder$year
+```
+
+
+
+
 
 You can also embed plots, for example:
 

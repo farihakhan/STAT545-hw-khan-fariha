@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Load Gapminder and dplyr (via tidyverse)
 
-```{r cars}
+```{r}
 library(gapminder)
 library(tidyverse)
 ```
@@ -60,7 +60,31 @@ length(gapminder)
 str(gapminder)
 ```
 
-## Including Plots
+#### Explore individual variables
+#####Pick at least one categorical variable and at least one quantitative variable to explore.
+Using continent and population
+```{r}
+gapminder %>% 
+      distinct(continent)
+
+gapminder %>% 
+      group_by(continent) %>% 
+      tally()
+
+gapminder %>% 
+      group_by(continent) %>% 
+      summarise(min_population = min(pop),
+                avg_population = mean(pop),
+                max_population = max(pop))
+```
+
+```{r}
+var_quant <- gapminder$year
+```
+
+
+
+
 
 You can also embed plots, for example:
 
