@@ -3,27 +3,21 @@
 ### Fariha Khan
 > Contact:  fkhan@bccrc.ca 
 
-
+#
 ### This repository contains homework assignments for STAT-545
 
- 
+# 
 ##### Assignments are organized into their respective directories
 
 
 
 Example:
 
-- hw_01
+- *hw_01*, *hw_02*, ...
 
-- hw_02
 
-- hw_03
-
-- hw_04
-
-- hw_05
  
- 
+# 
 ### Homework schedule:
 
 | **Homework** | **Due Date** | **Peer review Due Date** |
@@ -38,7 +32,7 @@ Example:
 ### Current progress:
 ### 
 - [x] homework 1
-- [~] homework 2
+- [ ] homework 2
 - [ ] homework 3
 - [ ] homework 4
 - [ ] homework 5
