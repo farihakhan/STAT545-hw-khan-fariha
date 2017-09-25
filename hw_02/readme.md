@@ -6,17 +6,17 @@
 
  - Make a homework repo
  
-       * Bring rectangular data in
+      - Bring rectangular data in
        
-       * Smell test the data
+      - Smell test the data
        
-       * Explore individual variables
+      - Explore individual variables
        
-       * Explore various plot types
+      - Explore various plot types
        
-       * Use filter(), select() and %>%
+      - Use filter(), select() and %>%
        
-       * But I want to do more!
+      - But I want to do more!
        
  - Report your process
  - Submit the assignment
