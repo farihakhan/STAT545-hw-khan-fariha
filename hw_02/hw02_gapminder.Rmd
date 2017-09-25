@@ -60,12 +60,12 @@ length(gapminder)
 str(gapminder)
 ```
 
+
 #### Explore individual variables
-#####Pick at least one categorical variable and at least one quantitative variable to explore.
-Using continent and population
+
+##### Pick at least one categorical variable and at least one quantitative variable to explore.
+For each continent, explore the overall population data
 ```{r}
-gapminder %>% 
-      distinct(continent)
 
 gapminder %>% 
       group_by(continent) %>% 
@@ -78,18 +78,20 @@ gapminder %>%
                 max_population = max(pop))
 ```
 
+For each continent, explore which countries have the highest and lowest population
 ```{r}
-var_quant <- gapminder$year
+gapminder %>% 
+      group_by(continent) %>%
+      select(continent, country, pop) %>%
+      top_n(1, wt = (pop)) %>% 
+      arrange(continent)
+
+gapminder %>% 
+      group_by(continent) %>%
+      select(continent, country, pop) %>%
+      top_n(1, wt = desc(pop)) %>% 
+      arrange(continent)
 ```
 
 
 
-
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

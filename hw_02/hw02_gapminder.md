@@ -13,6 +13,11 @@ Fariha Khan
 Load Gapminder and dplyr (via tidyverse)
 
 
+```r
+library(gapminder)
+library(tidyverse)
+```
+
 ```
 ## Loading tidyverse: ggplot2
 ## Loading tidyverse: tibble
@@ -153,24 +158,8 @@ str(gapminder)
 ```
 
 #### Explore individual variables
-#####Pick at least one categorical variable and at least one quantitative variable to explore.
+##### Pick at least one categorical variable and at least one quantitative variable to explore.
 Using continent and population
-
-```r
-gapminder %>% 
-      distinct(continent)
-```
-
-```
-## # A tibble: 5 x 1
-##   continent
-##      <fctr>
-## 1      Asia
-## 2    Europe
-## 3    Africa
-## 4  Americas
-## 5   Oceania
-```
 
 ```r
 gapminder %>% 
@@ -209,16 +198,4 @@ gapminder %>%
 ```
 
 
-```r
-var_quant <- gapminder$year
-```
 
-
-
-
-
-You can also embed plots, for example:
-
-![](hw02_gapminder_files/figure-html/pressure-1.png)<!-- -->
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
