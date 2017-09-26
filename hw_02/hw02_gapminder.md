@@ -218,8 +218,13 @@ gapminder %>%
 ```
 
 
-
-
+continent    min_population   avg_population   max_population
+----------  ---------------  ---------------  ---------------
+Africa                60011          9916003        135031164
+Americas             662850         24504795        301139947
+Asia                 120447         77038722       1318683096
+Europe               147962         17169765         82400996
+Oceania             1994794          8874672         20434176
 
 
 Here I added a second categorical variable and looked to find which country had the lowest and highest population per given continent. 
@@ -277,7 +282,7 @@ p <- ggplot(year_data, aes(x=gdpPercap, y=lifeExp))
 p + geom_point(aes(color=continent),alpha=0.5, size=1)
 ```
 
-![](hw02_gapminder_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+![](hw02_gapminder_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
 
 2. A plot of one quantitative variable
@@ -287,7 +292,7 @@ p2 <- ggplot(gapminder, aes(lifeExp))
 p2 + geom_density(aes(color=continent))
 ```
 
-![](hw02_gapminder_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+![](hw02_gapminder_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
 
 3. A plot of one quantitative variable and one categorical
 
@@ -299,5 +304,5 @@ p3 + geom_boxplot(aes(fill=factor(year))) +
       facet_grid(~ continent)
 ```
 
-![](hw02_gapminder_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
+![](hw02_gapminder_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
 

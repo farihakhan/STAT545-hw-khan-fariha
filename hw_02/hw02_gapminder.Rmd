@@ -101,16 +101,14 @@ gapminder %>%
                 max_population = max(pop))
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, results='asis'}
+library(knitr)
 continent_range <- gapminder %>% 
       group_by(continent) %>% 
       summarise(min_population = min(pop),
                 avg_population = mean(pop),
                 max_population = max(pop))
-```
-
-```{r, echo=FALSE, fig.height=7, fig.width=7}
-View(continent_range)
+kable(continent_range)
 ```
 
 

@@ -266,6 +266,48 @@ suppressPackageStartupMessages(library(gapminder))</code></pre>
 ## 3      Asia         120447       77038722     1318683096
 ## 4    Europe         147962       17169765       82400996
 ## 5   Oceania        1994794        8874672       20434176</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">continent</th>
+<th align="right">min_population</th>
+<th align="right">avg_population</th>
+<th align="right">max_population</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Africa</td>
+<td align="right">60011</td>
+<td align="right">9916003</td>
+<td align="right">135031164</td>
+</tr>
+<tr class="even">
+<td align="left">Americas</td>
+<td align="right">662850</td>
+<td align="right">24504795</td>
+<td align="right">301139947</td>
+</tr>
+<tr class="odd">
+<td align="left">Asia</td>
+<td align="right">120447</td>
+<td align="right">77038722</td>
+<td align="right">1318683096</td>
+</tr>
+<tr class="even">
+<td align="left">Europe</td>
+<td align="right">147962</td>
+<td align="right">17169765</td>
+<td align="right">82400996</td>
+</tr>
+<tr class="odd">
+<td align="left">Oceania</td>
+<td align="right">1994794</td>
+<td align="right">8874672</td>
+<td align="right">20434176</td>
+</tr>
+</tbody>
+</table>
 <p>Here I added a second categorical variable and looked to find which country had the lowest and highest population per given continent.</p>
 <pre class="r"><code>gapminder %&gt;% 
       group_by(continent) %&gt;%
