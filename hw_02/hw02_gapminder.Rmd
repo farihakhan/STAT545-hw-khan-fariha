@@ -2,7 +2,7 @@
 title: "hw02_gapminder.Rmd"
 author: "Fariha Khan"
 date: '2017-09-24'
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -99,7 +99,8 @@ gapminder %>%
                 max_population = max(pop))
 ```
 
-```{r, include=FALSE, results='markup'}
+I tried playing with the knitr package to include a table output.
+```{r, echo=FALSE, results='markup'}
 library(knitr)
 continent_range <- gapminder %>% 
       group_by(continent) %>% 
@@ -110,14 +111,8 @@ kable(continent_range)
 ```
 
 
-Here I added a second categorical variable and looked to find which country had the lowest and highest population per given continent. 
+Here I added a second categorical variable and looked to find which country had the lowest population per given continent. 
 ```{r}
-gapminder %>% 
-      group_by(continent) %>%
-      select(continent, country, pop) %>%
-      top_n(1, wt = (pop)) %>% 
-      arrange(continent)
-
 gapminder %>% 
       group_by(continent) %>%
       select(continent, country, pop) %>%
@@ -125,26 +120,49 @@ gapminder %>%
       arrange(continent)
 ```
 
+```{r, echo=FALSE, results='markup'}
+library(knitr)
+low_countr <- gapminder %>% 
+      group_by(continent) %>%
+      select(continent, country, pop) %>%
+      top_n(1, wt = desc(pop)) %>% 
+      arrange(continent)
+
+kable(continent_range)
+```
 
 #### Plotting gapminder data using ggplot2
+
+##### I used life expactancy as my main variable of interest in the following plots.
+
 1. A scatterplot of two quantitative variables.
-Look at the trend between gdpPercap and life expectancy for years after 1990
+
+I looked at the trend between gdpPercap and life expectancy for years **after 1990**.
+I first created a filtered dataset of gapminder which only included data for years past the 90s.
+The scatterplot shows an upwards trend of life expectancy with the increare is GDP per Capita. I also added distinguished the continents by colour, which shows that the Americas and Europe generally has a higher life expentancy.
+
 ```{r}
 year_data <- gapminder %>% 
       filter(year >= 1990)
 
-p <- ggplot(year_data, aes(x=gdpPercap, y=lifeExp))
-p + geom_point(aes(color=continent),alpha=0.5, size=1)
+ggplot(year_data, aes(x=gdpPercap, y=lifeExp)) +
+      geom_point(aes(color=continent),alpha=0.5, size=1)
 ```
 
 
 2. A plot of one quantitative variable
+
+Here I made a density plot using geom_density to look at the life expenctancy. 
+I differentiated the graph based on continent again here, which shows that different continents have their peak frequencies at various ages.
 ```{r}
-p2 <- ggplot(gapminder, aes(lifeExp))
-p2 + geom_density(aes(color=continent))
+ggplot(gapminder, aes(lifeExp)) +
+      geom_density(aes(color=continent))
 ```
 
 3. A plot of one quantitative variable and one categorical
+I wanted to compare the data of the most recent and latest years here, so I created a subsetted dataframe to include data from only 1952 and 2007.
+I later looked to see if there was a visable trend in the range life expectancy between these two years. I changed the year variable into a factor data type to make it discrete.
+I also made the plot faceted to show the difference between the continents.
 ```{r}
 year2_data <- gapminder %>% 
       filter(year %in% c(1952, 2007))
