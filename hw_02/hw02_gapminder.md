@@ -218,13 +218,6 @@ gapminder %>%
 ```
 
 
-continent    min_population   avg_population   max_population
-----------  ---------------  ---------------  ---------------
-Africa                60011          9916003        135031164
-Americas             662850         24504795        301139947
-Asia                 120447         77038722       1318683096
-Europe               147962         17169765         82400996
-Oceania             1994794          8874672         20434176
 
 
 Here I added a second categorical variable and looked to find which country had the lowest and highest population per given continent. 

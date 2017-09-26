@@ -101,7 +101,7 @@ gapminder %>%
                 max_population = max(pop))
 ```
 
-```{r, echo=FALSE, results='asis'}
+```{r, include=FALSE, results='markup'}
 library(knitr)
 continent_range <- gapminder %>% 
       group_by(continent) %>% 
