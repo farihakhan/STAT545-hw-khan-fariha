@@ -66,12 +66,14 @@ length(gapminder)
 
 6. What data type is each variable?
 - *The str() function summaries the structure of the object and gives the variable type and range. The variable names and types are:*
-      - *country  : factor*
-      - *continent: factor*
-      - *year     : integer*
-      - *lifeExp  : numerical*
-      - *pop      : integer*
-      - *gdpPercap: numerical*
+
+       - *country  : factor*
+       - *continent: factor*
+       - *year     : integer*
+       - *lifeExp  : numerical*
+       - *pop      : integer*
+       - *gdpPercap: numerical*
+       
 ```{r}
 str(gapminder)
 ```
@@ -91,13 +93,24 @@ gapminder %>%
 ```
 
 I used the summarize() to get the range of the minimum, maximum and average population observed in a given continent.
-```{r, echo=TRUE}
+```{r}
 gapminder %>% 
       group_by(continent) %>% 
       summarise(min_population = min(pop),
                 avg_population = mean(pop),
                 max_population = max(pop))
 ```
+
+```{r, echo=FALSE}
+continent_range <- gapminder %>% 
+      group_by(continent) %>% 
+      summarise(min_population = min(pop),
+                avg_population = mean(pop),
+                max_population = max(pop))
+
+View(continent_range)
+```
+
 
 Here I added a second categorical variable and looked to find which country had the lowest and highest population per given continent. 
 ```{r}

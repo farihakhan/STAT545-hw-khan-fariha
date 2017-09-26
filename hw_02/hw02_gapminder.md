@@ -147,12 +147,14 @@ length(gapminder)
 
 6. What data type is each variable?
 - *The str() function summaries the structure of the object and gives the variable type and range. The variable names and types are:*
-      - *country  : factor*
-      - *continent: factor*
-      - *year     : integer*
-      - *lifeExp  : numerical*
-      - *pop      : integer*
-      - *gdpPercap: numerical*
+
+       - *country  : factor*
+       - *continent: factor*
+       - *year     : integer*
+       - *lifeExp  : numerical*
+       - *pop      : integer*
+       - *gdpPercap: numerical*
+       
 
 ```r
 str(gapminder)
@@ -215,6 +217,9 @@ gapminder %>%
 ## 5   Oceania        1994794        8874672       20434176
 ```
 
+
+
+
 Here I added a second categorical variable and looked to find which country had the lowest and highest population per given continent. 
 
 ```r
@@ -270,7 +275,7 @@ p <- ggplot(year_data, aes(x=gdpPercap, y=lifeExp))
 p + geom_point(aes(color=continent),alpha=0.5, size=1)
 ```
 
-![](hw02_gapminder_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+![](hw02_gapminder_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
 
 2. A plot of one quantitative variable
@@ -280,7 +285,7 @@ p2 <- ggplot(gapminder, aes(lifeExp))
 p2 + geom_density(aes(color=continent))
 ```
 
-![](hw02_gapminder_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+![](hw02_gapminder_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
 
 3. A plot of one quantitative variable and one categorical
 
@@ -292,5 +297,5 @@ p3 + geom_boxplot(aes(fill=factor(year))) +
       facet_grid(~ continent)
 ```
 
-![](hw02_gapminder_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+![](hw02_gapminder_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
 
