@@ -2,9 +2,7 @@
 title: "hw02_gapminder.Rmd"
 author: "Fariha Khan"
 date: '2017-09-24'
-output: 
-  html_document: 
-    keep_md: yes
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
