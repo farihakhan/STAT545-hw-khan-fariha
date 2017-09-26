@@ -261,8 +261,8 @@ ggplot(gapminder, aes(lifeExp)) +
 ``` r
 year2_data <- gapminder %>% 
       filter(year %in% c(1952, 2007))
-p3 <- ggplot(year2_data, aes(x=factor(year), y=lifeExp))
-p3 + geom_boxplot(aes(fill=factor(year))) +
+ggplot(year2_data, aes(x=factor(year), y=lifeExp)) +
+      geom_boxplot(aes(fill=factor(year))) +
       facet_grid(~ continent)
 ```
 

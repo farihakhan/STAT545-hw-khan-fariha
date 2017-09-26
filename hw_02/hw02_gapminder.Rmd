@@ -141,7 +141,7 @@ I looked at the trend between gdpPercap and life expectancy for years **after 19
 I first created a filtered dataset of gapminder which only included data for years past the 90s.
 The scatterplot shows an upwards trend of life expectancy with the increare is GDP per Capita. I also added distinguished the continents by colour, which shows that the Americas and Europe generally has a higher life expentancy.
 
-```{r}
+```{r, echo=TRUE}
 year_data <- gapminder %>% 
       filter(year >= 1990)
 
@@ -154,7 +154,7 @@ ggplot(year_data, aes(x=gdpPercap, y=lifeExp)) +
 
 Here I made a density plot using geom_density to look at the life expenctancy. 
 I differentiated the graph based on continent again here, which shows that different continents have their peak frequencies at various ages.
-```{r}
+```{r, echo=TRUE}
 ggplot(gapminder, aes(lifeExp)) +
       geom_density(aes(color=continent))
 ```
@@ -163,11 +163,11 @@ ggplot(gapminder, aes(lifeExp)) +
 I wanted to compare the data of the most recent and latest years here, so I created a subsetted dataframe to include data from only 1952 and 2007.
 I later looked to see if there was a visable trend in the range life expectancy between these two years. I changed the year variable into a factor data type to make it discrete.
 I also made the plot faceted to show the difference between the continents.
-```{r}
+```{r, echo=TRUE}
 year2_data <- gapminder %>% 
       filter(year %in% c(1952, 2007))
-p3 <- ggplot(year2_data, aes(x=factor(year), y=lifeExp))
-p3 + geom_boxplot(aes(fill=factor(year))) +
+ggplot(year2_data, aes(x=factor(year), y=lifeExp)) +
+      geom_boxplot(aes(fill=factor(year))) +
       facet_grid(~ continent)
 ```
 

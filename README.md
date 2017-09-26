@@ -10,10 +10,8 @@
 ##### Assignments are organized into their respective directories
 
 
-
-Example:
-
-- *hw_01*, *hw_02*, ...
+- [*hw_01*](https://github.com/farihakhan/STAT545-hw-khan-fariha/tree/master/hw_01)
+- [*hw_02*](https://github.com/farihakhan/STAT545-hw-khan-fariha/tree/master/hw_02)
 
 
  
@@ -33,7 +31,7 @@ Example:
 
  
 - [x] homework 1
-- [ ] homework 2
+- [x] homework 2
 - [ ] homework 3
 - [ ] homework 4
 - [ ] homework 5
