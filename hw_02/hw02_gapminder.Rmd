@@ -27,28 +27,37 @@ suppressPackageStartupMessages(library(gapminder))
 ##### Explore the gapminder object:
 
 1. Is it a data.frame, a matrix, a vector, a list?
+- *The gapminder dataset is a list object and a data frame*
 ```{r}
 str(gapminder)
 ```
 
 2. What’s its class?
+- *The gapminder dataset is a data frame class (made of lists)*
 ```{r}
 class(gapminder)
 typeof(gapminder)
 ```
 
 3. How many variables/columns?
+- *There are 6 column*
 ```{r}
 ncol(gapminder)
 ```
 
 4. How many rows/observations?
+- *There are 1704 rows*
 ```{r}
 nrow(gapminder)
 ```
 
 5. Can you get these facts about “extent” or “size” in more than one way? Can you imagine different functions being useful in different contexts?
+- *The str() function displays a summary of the internal structure of the object*
+- *The summary() function shows the name and a summary of each variable*
+- *The dim() function gives the value of rows and columns*
+- *The length() function gives the number of columns and the names() fucntion outputs the names of of each column*
 ```{r}
+str(gapminder)
 summary(gapminder)
 dim(gapminder)
 names(gapminder)
@@ -56,6 +65,13 @@ length(gapminder)
 ```
 
 6. What data type is each variable?
+- *The str() function summaries the structure of the object and gives the variable type and range. The variable names and types are:*
+      - *country  : factor*
+      - *continent: factor*
+      - *year     : integer*
+      - *lifeExp  : numerical*
+      - *pop      : integer*
+      - *gdpPercap: numerical*
 ```{r}
 str(gapminder)
 ```
@@ -64,13 +80,18 @@ str(gapminder)
 #### Explore individual variables
 
 ##### Pick at least one categorical variable and at least one quantitative variable to explore.
-For each continent, explore the overall population data
-```{r}
+I chose to explore explore the overall population by continent here.
 
+First I used tally() to show the different columns and the number of observations in each conintent.
+      
+```{r tally continents}
 gapminder %>% 
       group_by(continent) %>% 
       tally()
+```
 
+I used the summarize() to get the range of the minimum, maximum and average population observed in a given continent.
+```{r, echo=TRUE}
 gapminder %>% 
       group_by(continent) %>% 
       summarise(min_population = min(pop),
@@ -78,7 +99,7 @@ gapminder %>%
                 max_population = max(pop))
 ```
 
-For each continent, explore which countries have the highest and lowest population
+Here I added a second categorical variable and looked to find which country had the lowest and highest population per given continent. 
 ```{r}
 gapminder %>% 
       group_by(continent) %>%

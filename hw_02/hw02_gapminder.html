@@ -134,6 +134,9 @@ suppressPackageStartupMessages(library(gapminder))</code></pre>
 <ol style="list-style-type: decimal">
 <li>Is it a data.frame, a matrix, a vector, a list?</li>
 </ol>
+<ul>
+<li><em>The gapminder dataset is a list object and a data frame</em></li>
+</ul>
 <pre class="r"><code>str(gapminder)</code></pre>
 <pre><code>## Classes 'tbl_df', 'tbl' and 'data.frame':    1704 obs. of  6 variables:
 ##  $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
@@ -145,6 +148,9 @@ suppressPackageStartupMessages(library(gapminder))</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>What’s its class?</li>
 </ol>
+<ul>
+<li><em>The gapminder dataset is a data frame class (made of lists)</em></li>
+</ul>
 <pre class="r"><code>class(gapminder)</code></pre>
 <pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
 <pre class="r"><code>typeof(gapminder)</code></pre>
@@ -152,16 +158,36 @@ suppressPackageStartupMessages(library(gapminder))</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>How many variables/columns?</li>
 </ol>
+<ul>
+<li><em>There are 6 column</em></li>
+</ul>
 <pre class="r"><code>ncol(gapminder)</code></pre>
 <pre><code>## [1] 6</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>How many rows/observations?</li>
 </ol>
+<ul>
+<li><em>There are 1704 rows</em></li>
+</ul>
 <pre class="r"><code>nrow(gapminder)</code></pre>
 <pre><code>## [1] 1704</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Can you get these facts about “extent” or “size” in more than one way? Can you imagine different functions being useful in different contexts?</li>
 </ol>
+<ul>
+<li><em>The str() function displays a summary of the internal structure of the object</em></li>
+<li><em>The summary() function shows the name and a summary of each variable</em></li>
+<li><em>The dim() function gives the value of rows and columns</em></li>
+<li><em>The length() function gives the number of columns and the names() fucntion outputs the names of of each column</em></li>
+</ul>
+<pre class="r"><code>str(gapminder)</code></pre>
+<pre><code>## Classes 'tbl_df', 'tbl' and 'data.frame':    1704 obs. of  6 variables:
+##  $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+##  $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+##  $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
+##  $ gdpPercap: num  779 821 853 836 740 ...</code></pre>
 <pre class="r"><code>summary(gapminder)</code></pre>
 <pre><code>##         country        continent        year         lifeExp     
 ##  Afghanistan:  12   Africa  :624   Min.   :1952   Min.   :23.60  
@@ -188,6 +214,17 @@ suppressPackageStartupMessages(library(gapminder))</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>What data type is each variable?</li>
 </ol>
+<ul>
+<li><em>The str() function summaries the structure of the object and gives the variable type and range. The variable names and types are:</em>
+<ul>
+<li><em>country : factor</em></li>
+<li><em>continent: factor</em></li>
+<li><em>year : integer</em></li>
+<li><em>lifeExp : numerical</em></li>
+<li><em>pop : integer</em></li>
+<li><em>gdpPercap: numerical</em></li>
+</ul></li>
+</ul>
 <pre class="r"><code>str(gapminder)</code></pre>
 <pre><code>## Classes 'tbl_df', 'tbl' and 'data.frame':    1704 obs. of  6 variables:
 ##  $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
@@ -202,7 +239,8 @@ suppressPackageStartupMessages(library(gapminder))</code></pre>
 <h4>Explore individual variables</h4>
 <div id="pick-at-least-one-categorical-variable-and-at-least-one-quantitative-variable-to-explore." class="section level5">
 <h5>Pick at least one categorical variable and at least one quantitative variable to explore.</h5>
-<p>For each continent, explore the overall population data</p>
+<p>I chose to explore explore the overall population by continent here.</p>
+<p>First I used tally() to show the different columns and the number of observations in each conintent.</p>
 <pre class="r"><code>gapminder %&gt;% 
       group_by(continent) %&gt;% 
       tally()</code></pre>
@@ -214,6 +252,7 @@ suppressPackageStartupMessages(library(gapminder))</code></pre>
 ## 3      Asia   396
 ## 4    Europe   360
 ## 5   Oceania    24</code></pre>
+<p>I used the summarize() to get the range of the minimum, maximum and average population observed in a given continent.</p>
 <pre class="r"><code>gapminder %&gt;% 
       group_by(continent) %&gt;% 
       summarise(min_population = min(pop),
@@ -227,7 +266,7 @@ suppressPackageStartupMessages(library(gapminder))</code></pre>
 ## 3      Asia         120447       77038722     1318683096
 ## 4    Europe         147962       17169765       82400996
 ## 5   Oceania        1994794        8874672       20434176</code></pre>
-<p>For each continent, explore which countries have the highest and lowest population</p>
+<p>Here I added a second categorical variable and looked to find which country had the lowest and highest population per given continent.</p>
 <pre class="r"><code>gapminder %&gt;% 
       group_by(continent) %&gt;%
       select(continent, country, pop) %&gt;%

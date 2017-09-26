@@ -21,6 +21,7 @@ suppressPackageStartupMessages(library(gapminder))
 ##### Explore the gapminder object:
 
 1. Is it a data.frame, a matrix, a vector, a list?
+- *The gapminder dataset is a list object and a data frame*
 
 ```r
 str(gapminder)
@@ -37,6 +38,7 @@ str(gapminder)
 ```
 
 2. What’s its class?
+- *The gapminder dataset is a data frame class (made of lists)*
 
 ```r
 class(gapminder)
@@ -55,6 +57,7 @@ typeof(gapminder)
 ```
 
 3. How many variables/columns?
+- *There are 6 column*
 
 ```r
 ncol(gapminder)
@@ -65,6 +68,7 @@ ncol(gapminder)
 ```
 
 4. How many rows/observations?
+- *There are 1704 rows*
 
 ```r
 nrow(gapminder)
@@ -75,6 +79,24 @@ nrow(gapminder)
 ```
 
 5. Can you get these facts about “extent” or “size” in more than one way? Can you imagine different functions being useful in different contexts?
+- *The str() function displays a summary of the internal structure of the object*
+- *The summary() function shows the name and a summary of each variable*
+- *The dim() function gives the value of rows and columns*
+- *The length() function gives the number of columns and the names() fucntion outputs the names of of each column*
+
+```r
+str(gapminder)
+```
+
+```
+## Classes 'tbl_df', 'tbl' and 'data.frame':	1704 obs. of  6 variables:
+##  $ country  : Factor w/ 142 levels "Afghanistan",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ continent: Factor w/ 5 levels "Africa","Americas",..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+##  $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+##  $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
+##  $ gdpPercap: num  779 821 853 836 740 ...
+```
 
 ```r
 summary(gapminder)
@@ -124,6 +146,13 @@ length(gapminder)
 ```
 
 6. What data type is each variable?
+- *The str() function summaries the structure of the object and gives the variable type and range. The variable names and types are:*
+      - *country  : factor*
+      - *continent: factor*
+      - *year     : integer*
+      - *lifeExp  : numerical*
+      - *pop      : integer*
+      - *gdpPercap: numerical*
 
 ```r
 str(gapminder)
@@ -143,7 +172,10 @@ str(gapminder)
 #### Explore individual variables
 
 ##### Pick at least one categorical variable and at least one quantitative variable to explore.
-For each continent, explore the overall population data
+I chose to explore explore the overall population by continent here.
+
+First I used tally() to show the different columns and the number of observations in each conintent.
+      
 
 ```r
 gapminder %>% 
@@ -161,6 +193,8 @@ gapminder %>%
 ## 4    Europe   360
 ## 5   Oceania    24
 ```
+
+I used the summarize() to get the range of the minimum, maximum and average population observed in a given continent.
 
 ```r
 gapminder %>% 
@@ -181,7 +215,7 @@ gapminder %>%
 ## 5   Oceania        1994794        8874672       20434176
 ```
 
-For each continent, explore which countries have the highest and lowest population
+Here I added a second categorical variable and looked to find which country had the lowest and highest population per given continent. 
 
 ```r
 gapminder %>% 
