@@ -227,43 +227,48 @@ gapminder %>%
 | Europe    |           147962|         17169765|         82400996|
 | Oceania   |          1994794|          8874672|         20434176|
 
-#### Plotting gapminder data using ggplot2
+### Plotting gapminder data using ggplot2
 
-##### I used life expactancy as my main variable of interest in the following plots.
+#### I used life expactancy as my main variable of interest in the following plots.
 
-1.  A scatterplot of two quantitative variables.
+#### 1. A scatterplot of two quantitative variables.
 
 I looked at the trend between gdpPercap and life expectancy for years **after 1990**. I first created a filtered dataset of gapminder which only included data for years past the 90s. The scatterplot shows an upwards trend of life expectancy with the increare is GDP per Capita. I also added distinguished the continents by colour, which shows that the Americas and Europe generally has a higher life expentancy.
 
 ``` r
 year_data <- gapminder %>% 
       filter(year >= 1990)
-
 ggplot(year_data, aes(x=gdpPercap, y=lifeExp)) +
-      geom_point(aes(color=continent),alpha=0.5, size=1)
+      geom_point(aes(color=continent),alpha=0.5, size=1) +
+      labs(title= "GDP per Capita vs Life Expectancy - 1990 onwards")
 ```
 
 ![](hw02_gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-12-1.png)
 
-1.  A plot of one quantitative variable
+#### 2. A plot of one quantitative variable
 
 Here I made a density plot using geom\_density to look at the life expenctancy. I differentiated the graph based on continent again here, which shows that different continents have their peak frequencies at various ages.
 
 ``` r
 ggplot(gapminder, aes(lifeExp)) +
-      geom_density(aes(color=continent))
+      geom_density(aes(color=continent)) +
+      labs(title = "Density of life expentancy - by continent")
 ```
 
 ![](hw02_gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-13-1.png)
 
-1.  A plot of one quantitative variable and one categorical I wanted to compare the data of the most recent and latest years here, so I created a subsetted dataframe to include data from only 1952 and 2007. I later looked to see if there was a visable trend in the range life expectancy between these two years. I changed the year variable into a factor data type to make it discrete. I also made the plot faceted to show the difference between the continents.
+#### 3. A plot of one quantitative variable and one categorical
+
+I wanted to compare the data of the most recent and latest years here, so I created a subsetted dataframe to include data from only 1952 and 2007. I later looked to see if there was a visable trend in the range life expectancy between these two years. I changed the year variable into a factor data type to make it discrete. I also made the plot faceted to show the difference between the continents.
 
 ``` r
 year2_data <- gapminder %>% 
       filter(year %in% c(1952, 2007))
 ggplot(year2_data, aes(x=factor(year), y=lifeExp)) +
       geom_boxplot(aes(fill=factor(year))) +
-      facet_grid(~ continent)
+      facet_grid(~ continent) +
+      scale_y_continuous(limits = c(0,100)) +
+      labs(title="1952 vs 2007: Life expectancy summary stat per continent")
 ```
 
 ![](hw02_gapminder_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-14-1.png)
