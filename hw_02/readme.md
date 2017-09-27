@@ -29,7 +29,7 @@
 3. [R for Data Science - Data Visualization](http://r4ds.had.co.nz/data-visualisation.html)
 
 #
-####Report your process
+#### Report your process
 
 I found this assignment to be quite fair. It took me a little bit longer than assignment 1, and I played with the formatting a lot more. Again, I used my local computer to do all of the edits and pushed everything from RStudio. I initially began with reformatting my project to include directories for different assignments. This made my homework repo a lot cleaner to work with and to visualise. 
 
