@@ -7,6 +7,7 @@
 #### **Overview:**
 
  - Manipulate and explore a dataset with the dplyr package, complemented by visualizations made with ggplot2.
+ 
        - Gapminder data
        
  - Task menu
