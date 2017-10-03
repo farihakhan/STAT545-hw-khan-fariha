@@ -11,6 +11,8 @@ Load Gapminder and tidyverse (contains dplyr and ggplot)
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(gapminder))
 suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(grid))
+suppressPackageStartupMessages(library(gridExtra))
 ```
 
 ``` r
@@ -96,10 +98,27 @@ kable(summary_gdpPercap)
 | Europe    |    973.5332|   7213.085|  12081.749|  20461.386|   49357.19|  14469.476|
 | Oceania   |  10039.5956|  14141.859|  17983.304|  22214.117|   34435.37|  18621.609|
 
+I chose to use a histogram to show the distribution of GDP per capita. I used the original gapminder dataset to show the full distribution of the values.
+
+To explore whether there is any trend correlating to year and GDP per capita, I used a a combination of a point graph overlapped with a linear fit graph.
+
 ``` r
-ggplot(gapminder, aes(x=gdpPercap, fill = continent)) + 
-      geom_histogram(alpha=0.8,binwidth=200) +
-      facet_wrap(~ continent, scales ="free", nrow = 1)
+gdppc_hist <- ggplot(gapminder, aes(x=gdpPercap, fill = continent)) + 
+      geom_histogram(binwidth=500) +
+      facet_wrap(~ continent, scales ="free", nrow = 1) +
+      scale_fill_brewer(palette = "Dark2") +
+      theme(legend.position="bottom")
+
+gdppc_line <- ggplot(gapminder, aes(year, gdpPercap, colour=continent)) +
+      geom_point(alpha=0.5, size=0.1) +
+      geom_smooth(method="lm") +
+      scale_color_brewer(palette = "Dark2") +
+      facet_grid(~continent) +
+      theme(legend.position="top")
+
+
+grid.arrange(gdppc_line,gdppc_hist, ncol=1,
+             top = textGrob("GDP per capita by continent"))
 ```
 
 ![](hw03_dplyr_files/figure-markdown_github-ascii_identifiers/plot-1.png)
