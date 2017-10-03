@@ -1,0 +1,77 @@
+---
+title: "Homework 3"
+author: "Fariha Khan"
+date: '2017-10-03'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#
+#
+##### The goal is to manipulate and explore a dataset with the dplyr package, complemented by visualizations made with ggplot2.
+
+
+Load Gapminder and tidyverse (contains dplyr and ggplot)
+
+```{r load packages}
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(gapminder))
+suppressPackageStartupMessages(library(knitr))
+```
+
+
+```{r gapminder}
+summary(gapminder)
+```
+
+## Task menu
+
+### 1. Get the maximum and minimum of GDP per capita for all continents
+
+
+I used the summarize() to get the range of the minimum and maximum GDP per capita observed in a given continent. The data is summarized in a table below.
+```{r min gdpPercap & max gdpPercap by continent}
+## Create a subset of values for min, max and average GDP per capita 
+minmax_gdpPercap <- gapminder %>% 
+      group_by(continent) %>% 
+      summarise(min_gdpPercap = min(gdpPercap),
+                avg_gdpPercap = mean(gdpPercap),
+                max_gdpPercap = max(gdpPercap))
+```
+
+#### Visual representation of minimum and maximum GDP per capita by continent
+
+```{r table and plot, results = 'asis'}
+## Display table of min and max values
+minmax_gdpPercap %>% 
+      select(continent, min_gdpPercap, max_gdpPercap) %>% 
+      kable()
+
+## Display data in graphical format
+ggplot(minmax_gdpPercap, aes(, x=continent, y=avg_gdpPercap)) +
+      geom_pointrange(aes(ymin=min_gdpPercap, ymax=max_gdpPercap))
+
+```
+
+
+#
+### 2. Look at the spread of GDP per capita within the continents.
+
+#
+### 3. Compute a trimmed mean of life expectancy for different years.
+
+#
+### 4. How is life expectancy changing over time on different continents?
+
+
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
