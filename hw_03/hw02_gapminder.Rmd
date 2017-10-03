@@ -46,7 +46,7 @@ minmax_gdpPercap <- gapminder %>%
 
 #### Visual representation of minimum and maximum GDP per capita by continent
 
-```{r table and plot, results = 'asis'}
+```{r table and plot, results = 'markup'}
 ## Display table of min and max values
 minmax_gdpPercap %>% 
       select(continent, min_gdpPercap, max_gdpPercap) %>% 

@@ -31,3 +31,9 @@
       - Make up your own! Between the dplyr coverage in class and the list above, I think you get the idea.
        
  - Companion graphs
+ 
+#### **Progress report:**
+
+Difficulties:
+I spent a lot of time trying to format a list into my README doc, but I was still unable to get the output I was looking for.
+When making output tables using the kable() function, I found that using results='asis' displayed the info in plain linear text. I changed the chunk configuration to results='markup' to display the data is a cleaner format.
