@@ -64,7 +64,7 @@ summary_gdpPercap %>%
 
 ## Display values in a table
 ggplot(summary_gdpPercap, aes(x=continent, color = continent)) +
-       geom_linerange(aes(ymin=Minimum, ymax=Maximum))+
+       geom_errorbar(aes(ymin=Minimum, ymax=Maximum))+
        ggtitle("Max and Min GDP per Capita") +
        ylab("GDP per Capita")
 ```
@@ -109,9 +109,34 @@ grid.arrange(gdppc_line,gdppc_hist, ncol=1,
 
 #
 ### 3. Compute a trimmed mean of life expectancy for different years.
+*Couldn't think of a cool analysis*
+
 
 #
 ### 4. How is life expectancy changing over time on different continents?
+I did a simple analysis of looking at the change in life expectancy (five number summary), based on year and continent. 
+```{r, results='markup'}
+summary_lifeExp <- gapminder %>% 
+      group_by(continent, year) %>% 
+      summarise(Minimum = min(lifeExp),
+                Q1 = quantile(lifeExp, probs=0.25),
+                Median = median(lifeExp),
+                Q3 = quantile(lifeExp, probs=0.75),
+                Maximum = max(lifeExp),
+                Average = mean(lifeExp)) 
+
+kable(head(summary_lifeExp))
+```
+
+I chose to plot the data by using a line-type graph overlaying geom_points to show the positive correlation between year and life expectancy. This trend seems to be consisent through each continent.
+```{r}
+ggplot(gapminder, aes(x=year, y=lifeExp, shape = continent, color=continent)) +
+      geom_point(aes(group=continent),
+                 size = 1, position = position_dodge(width = 2), alpha =0.6) +
+      geom_smooth(aes(group=continent)) +
+      scale_color_brewer(palette = "Set1") +
+      theme_bw()
+```
 
 You can also embed plots, for example:
 

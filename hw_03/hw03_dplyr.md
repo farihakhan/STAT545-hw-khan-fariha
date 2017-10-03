@@ -125,7 +125,48 @@ grid.arrange(gdppc_line,gdppc_hist, ncol=1,
 
 ### 3. Compute a trimmed mean of life expectancy for different years.
 
+*Couldn't think of a cool analysis*
+
 ### 4. How is life expectancy changing over time on different continents?
+
+I did a simple analysis of looking at the change in life expectancy (five number summary), based on year and continent.
+
+``` r
+summary_lifeExp <- gapminder %>% 
+      group_by(continent, year) %>% 
+      summarise(Minimum = min(lifeExp),
+                Q1 = quantile(lifeExp, probs=0.25),
+                Median = median(lifeExp),
+                Q3 = quantile(lifeExp, probs=0.75),
+                Maximum = max(lifeExp),
+                Average = mean(lifeExp)) 
+
+kable(head(summary_lifeExp))
+```
+
+| continent |  year|  Minimum|        Q1|   Median|        Q3|  Maximum|   Average|
+|:----------|-----:|--------:|---------:|--------:|---------:|--------:|---------:|
+| Africa    |  1952|   30.000|  35.81175|  38.8330|  42.11775|   52.724|  39.13550|
+| Africa    |  1957|   31.570|  37.43000|  40.5925|  44.84600|   58.089|  41.26635|
+| Africa    |  1962|   32.767|  39.48400|  42.6305|  47.76225|   60.246|  43.31944|
+| Africa    |  1967|   34.113|  41.36850|  44.6985|  49.52650|   61.557|  45.33454|
+| Africa    |  1972|   35.400|  43.29800|  47.0315|  51.54600|   64.274|  47.45094|
+| Africa    |  1977|   36.788|  44.51300|  49.2725|  53.87100|   67.064|  49.58042|
+
+I chose to plot the data by using a line-type graph overlaying geom\_points to show the positive correlation between year and life expectancy. This trend seems to be consisent through each continent.
+
+``` r
+ggplot(gapminder, aes(x=year, y=lifeExp, shape = continent, color=continent)) +
+      geom_point(aes(group=continent),
+                 size = 1, position = position_dodge(width = 2), alpha =0.6) +
+      geom_smooth(aes(group=continent)) +
+      scale_color_brewer(palette = "Set1") +
+      theme_bw()
+```
+
+    ## `geom_smooth()` using method = 'loess'
+
+![](hw03_dplyr_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-5-1.png)
 
 You can also embed plots, for example:
 
