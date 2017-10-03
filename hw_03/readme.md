@@ -12,11 +12,11 @@
        
  - Task menu
  
-       - Get the maximum and minimum of GDP per capita for all continents.
+      - Get the maximum and minimum of GDP per capita for all continents.
 
-       - Look at the spread of GDP per capita within the continents.
+      - Look at the spread of GDP per capita within the continents.
 
-       - Compute a trimmed mean of life expectancy for different years. Or a weighted mean, weighting by population.
+      - Compute a trimmed mean of life expectancy for different years. Or a weighted mean, weighting by population.
 
       - How is life expectancy changing over time on different continents?
 
