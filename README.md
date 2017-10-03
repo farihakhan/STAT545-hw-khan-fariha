@@ -32,6 +32,6 @@
  
 - [x] homework 1
 - [x] homework 2
-- [ ] homework 3
+- [x] homework 3
 - [ ] homework 4
 - [ ] homework 5
