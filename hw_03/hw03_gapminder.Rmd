@@ -72,9 +72,9 @@ ggplot(summary_gdpPercap, aes(x=continent, color = continent)) +
 ```{r GDP per capita spread, results = 'markup'}
 kable(summary_gdpPercap)
 
-ggplot(gapminder, aes(x=gdpPercap, fill=continent)) + 
-      geom_histogram(position = "dodge", binwidth = 10)
-      
+ggplot(gapminder, aes(x=gdpPercap, fill = continent)) + 
+      geom_histogram(alpha=0.8,binwidth=200) +
+      facet_wrap(~ continent, scales ="free", nrow = 1)
 ```
 
 

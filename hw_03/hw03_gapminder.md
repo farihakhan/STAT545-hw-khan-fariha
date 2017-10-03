@@ -92,7 +92,7 @@ ggplot(summary_gdpPercap, aes(x=continent, color = continent)) +
        ylab("GDP per Capita")
 ```
 
-![](hw02_gapminder_files/figure-html/min gdpPercap & max gdpPercap by continent-1.png)<!-- -->
+![](hw03_gapminder_files/figure-html/min gdpPercap & max gdpPercap by continent-1.png)<!-- -->
 
 > I've never used geom_linerange before - it seemed to be the best way to graphically show only two values per variable.
 
@@ -115,11 +115,12 @@ Europe         973.5332    7213.085   12081.749   20461.386    49357.19   14469.
 Oceania      10039.5956   14141.859   17983.304   22214.117    34435.37   18621.609
 
 ```r
-ggplot(gapminder, aes(x=gdpPercap, fill=continent)) + 
-      geom_histogram(position = "dodge", binwidth = 10)
+ggplot(gapminder, aes(x=gdpPercap, fill = continent)) + 
+      geom_histogram(alpha=0.8,binwidth=200) +
+      facet_wrap(~ continent, scales ="free", nrow = 1)
 ```
 
-![](hw02_gapminder_files/figure-html/GDP per capita spread-1.png)<!-- -->
+![](hw03_gapminder_files/figure-html/GDP per capita spread-1.png)<!-- -->
 
 
 #
@@ -132,6 +133,6 @@ ggplot(gapminder, aes(x=gdpPercap, fill=continent)) +
 
 You can also embed plots, for example:
 
-![](hw02_gapminder_files/figure-html/pressure-1.png)<!-- -->
+![](hw03_gapminder_files/figure-html/pressure-1.png)<!-- -->
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
