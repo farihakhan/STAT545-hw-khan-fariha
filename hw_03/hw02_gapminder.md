@@ -48,48 +48,79 @@ summary(gapminder)
 ### 1. Get the maximum and minimum of GDP per capita for all continents
 
 
-I used the summarize() to get the range of the minimum and maximum GDP per capita observed in a given continent. The data is summarized in a table below.
+I used the summarize() to get the full range GDP per capita observed in a given continent, and created a subset so I could use it for later questions. 
+
+
+
 
 ```r
-## Create a subset of values for min, max and average GDP per capita 
-minmax_gdpPercap <- gapminder %>% 
+summary_gdpPercap <- gapminder %>% 
       group_by(continent) %>% 
-      summarise(min_gdpPercap = min(gdpPercap),
-                avg_gdpPercap = mean(gdpPercap),
-                max_gdpPercap = max(gdpPercap))
+      summarise(Minimum = min(gdpPercap),
+                Q1 = quantile(gdpPercap, probs=0.25),
+                Median = median(gdpPercap),
+                Q3 = quantile(gdpPercap, probs=0.75),
+                Maximum = max(gdpPercap),
+                Average = mean(gdpPercap))
 ```
 
-#### Visual representation of minimum and maximum GDP per capita by continent
-
+Here, the minimum and maximum GDP per capita is summarized in a table below by continent.
 
 ```r
-## Display table of min and max values
-minmax_gdpPercap %>% 
-      select(continent, min_gdpPercap, max_gdpPercap) %>% 
+## Select values for max and min 
+## Display values in a table
+summary_gdpPercap %>% 
+      select(continent, Maximum, Minimum) %>% 
       kable()
 ```
 
 
 
-continent    min_gdpPercap   max_gdpPercap
-----------  --------------  --------------
-Africa            241.1659        21951.21
-Americas         1201.6372        42951.65
-Asia              331.0000       113523.13
-Europe            973.5332        49357.19
-Oceania         10039.5956        34435.37
+continent      Maximum      Minimum
+----------  ----------  -----------
+Africa        21951.21     241.1659
+Americas      42951.65    1201.6372
+Asia         113523.13     331.0000
+Europe        49357.19     973.5332
+Oceania       34435.37   10039.5956
 
 ```r
-## Display data in graphical format
-ggplot(minmax_gdpPercap, aes(, x=continent, y=avg_gdpPercap)) +
-      geom_pointrange(aes(ymin=min_gdpPercap, ymax=max_gdpPercap))
+## Display values in a table
+ggplot(summary_gdpPercap, aes(x=continent, color = continent)) +
+       geom_linerange(aes(ymin=Minimum, ymax=Maximum))+
+       ggtitle("Max and Min GDP per Capita") +
+       ylab("GDP per Capita")
 ```
 
-![](hw02_gapminder_files/figure-html/table and plot-1.png)<!-- -->
+![](hw02_gapminder_files/figure-html/min gdpPercap & max gdpPercap by continent-1.png)<!-- -->
+
+> I've never used geom_linerange before - it seemed to be the best way to graphically show only two values per variable.
 
 
 #
 ### 2. Look at the spread of GDP per capita within the continents.
+
+```r
+kable(summary_gdpPercap)
+```
+
+
+
+continent       Minimum          Q1      Median          Q3     Maximum     Average
+----------  -----------  ----------  ----------  ----------  ----------  ----------
+Africa         241.1659     761.247    1192.138    2377.417    21951.21    2193.755
+Americas      1201.6372    3427.779    5465.510    7830.210    42951.65    7136.110
+Asia           331.0000    1056.993    2646.787    8549.256   113523.13    7902.150
+Europe         973.5332    7213.085   12081.749   20461.386    49357.19   14469.476
+Oceania      10039.5956   14141.859   17983.304   22214.117    34435.37   18621.609
+
+```r
+ggplot(gapminder, aes(x=gdpPercap, fill=continent)) + 
+      geom_histogram(position = "dodge", binwidth = 10)
+```
+
+![](hw02_gapminder_files/figure-html/GDP per capita spread-1.png)<!-- -->
+
 
 #
 ### 3. Compute a trimmed mean of life expectancy for different years.

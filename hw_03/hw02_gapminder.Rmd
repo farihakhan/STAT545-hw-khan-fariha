@@ -34,33 +34,49 @@ summary(gapminder)
 ### 1. Get the maximum and minimum of GDP per capita for all continents
 
 
-I used the summarize() to get the range of the minimum and maximum GDP per capita observed in a given continent. The data is summarized in a table below.
-```{r min gdpPercap & max gdpPercap by continent}
-## Create a subset of values for min, max and average GDP per capita 
-minmax_gdpPercap <- gapminder %>% 
+I used the summarize() to get the full range GDP per capita observed in a given continent, and created a subset so I could use it for later questions. 
+
+
+
+```{r}
+summary_gdpPercap <- gapminder %>% 
       group_by(continent) %>% 
-      summarise(min_gdpPercap = min(gdpPercap),
-                avg_gdpPercap = mean(gdpPercap),
-                max_gdpPercap = max(gdpPercap))
+      summarise(Minimum = min(gdpPercap),
+                Q1 = quantile(gdpPercap, probs=0.25),
+                Median = median(gdpPercap),
+                Q3 = quantile(gdpPercap, probs=0.75),
+                Maximum = max(gdpPercap),
+                Average = mean(gdpPercap))
 ```
 
-#### Visual representation of minimum and maximum GDP per capita by continent
-
-```{r table and plot, results = 'markup'}
-## Display table of min and max values
-minmax_gdpPercap %>% 
-      select(continent, min_gdpPercap, max_gdpPercap) %>% 
+Here, the minimum and maximum GDP per capita is summarized in a table below by continent.
+```{r min gdpPercap & max gdpPercap by continent, results = 'markup'}
+## Select values for max and min 
+## Display values in a table
+summary_gdpPercap %>% 
+      select(continent, Maximum, Minimum) %>% 
       kable()
 
-## Display data in graphical format
-ggplot(minmax_gdpPercap, aes(, x=continent, y=avg_gdpPercap)) +
-      geom_pointrange(aes(ymin=min_gdpPercap, ymax=max_gdpPercap))
-
+## Display values in a table
+ggplot(summary_gdpPercap, aes(x=continent, color = continent)) +
+       geom_linerange(aes(ymin=Minimum, ymax=Maximum))+
+       ggtitle("Max and Min GDP per Capita") +
+       ylab("GDP per Capita")
 ```
+
+> I've never used geom_linerange before - it seemed to be the best way to graphically show only two values per variable.
 
 
 #
 ### 2. Look at the spread of GDP per capita within the continents.
+```{r GDP per capita spread, results = 'markup'}
+kable(summary_gdpPercap)
+
+ggplot(gapminder, aes(x=gdpPercap, fill=continent)) + 
+      geom_histogram(position = "dodge", binwidth = 10)
+      
+```
+
 
 #
 ### 3. Compute a trimmed mean of life expectancy for different years.

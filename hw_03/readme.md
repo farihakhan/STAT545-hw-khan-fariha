@@ -36,4 +36,5 @@
 
 Difficulties:
 I spent a lot of time trying to format a list into my README doc, but I was still unable to get the output I was looking for.
-When making output tables using the kable() function, I found that using results='asis' displayed the info in plain linear text. I changed the chunk configuration to results='markup' to display the data is a cleaner format.
+
+When making output tables using the kable() function, I found that using results='asis' displayed the info in plain linear text. I changed the chunk configuration to results='markup' to display the data is a cleaner format. I also found that I needed to seperate my code chunks in order to display a table and a plot.
