@@ -110,6 +110,20 @@ grid.arrange(gdppc_line,gdppc_hist, ncol=1,
 #
 ### 3. Compute a trimmed mean of life expectancy for different years.
 *Couldn't think of a cool analysis*
+```{r results='markup'}
+wgt_avg_lifeExp <- gapminder %>%
+      group_by(year) %>%
+      summarize(ave_lifeExp = mean(lifeExp),
+      avg_weight_lifeExp = weighted.mean(lifeExp, pop))
+kable(wgt_avg_lifeExp)
+```
+
+Plot difference in life expectancy
+```{r}
+ggplot(wgt_avg_lifeExp, aes(x=year)) +
+      geom_line(aes(y=ave_lifeExp, color = "ave_lifeExp")) +
+      geom_line(aes(y=avg_weight_lifeExp, color = "avg_weight_lifeExp"))
+```
 
 
 #
@@ -133,14 +147,22 @@ I chose to plot the data by using a line-type graph overlaying geom_points to sh
 ggplot(gapminder, aes(x=year, y=lifeExp, shape = continent, color=continent)) +
       geom_point(aes(group=continent),
                  size = 1, position = position_dodge(width = 2), alpha =0.6) +
-      geom_smooth(aes(group=continent)) +
+      geom_smooth(aes(group=continent), method = "loess") +
       scale_color_brewer(palette = "Set1") +
       theme_bw()
 ```
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
+I wanted to play with this data a little bit more so I decided to melt the summarized subset I created to see if there was anything visually interesting. The graphs didn't really provide too much interesting info overall, *but*, it's interesting to see the sudden drop in population that occured in Africa near ~1990.
+```{r}
+library(reshape2)
+m_lifeExp <- melt(summary_lifeExp,
+                  id.vars = c("continent", "year"),
+                  measure.vars = c("Minimum", "Q1", "Median",
+                                 "Average", "Q3","Maximum"))
+ggplot(m_lifeExp, aes(x=year, y=value, color=continent))+
+      geom_point(aes(shape=continent, group=year), size=1) +
+      geom_line(alpha=0.8) +
+      facet_wrap(~variable, ncol = 3) +
+      scale_color_brewer(palette = "Dark2")
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

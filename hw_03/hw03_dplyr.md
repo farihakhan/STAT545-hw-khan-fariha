@@ -127,6 +127,39 @@ grid.arrange(gdppc_line,gdppc_hist, ncol=1,
 
 *Couldn't think of a cool analysis*
 
+``` r
+wgt_avg_lifeExp <- gapminder %>%
+      group_by(year) %>%
+      summarize(ave_lifeExp = mean(lifeExp),
+      avg_weight_lifeExp = weighted.mean(lifeExp, pop))
+kable(wgt_avg_lifeExp)
+```
+
+|  year|  ave\_lifeExp|  avg\_weight\_lifeExp|
+|-----:|-------------:|---------------------:|
+|  1952|      49.05762|              48.94424|
+|  1957|      51.50740|              52.12189|
+|  1962|      53.60925|              52.32438|
+|  1967|      55.67829|              56.98431|
+|  1972|      57.64739|              59.51478|
+|  1977|      59.57016|              61.23726|
+|  1982|      61.53320|              62.88176|
+|  1987|      63.21261|              64.41635|
+|  1992|      64.16034|              65.64590|
+|  1997|      65.01468|              66.84934|
+|  2002|      65.69492|              67.83904|
+|  2007|      67.00742|              68.91909|
+
+Plot difference in life expectancy
+
+``` r
+ggplot(wgt_avg_lifeExp, aes(x=year)) +
+      geom_line(aes(y=ave_lifeExp, color = "ave_lifeExp")) +
+      geom_line(aes(y=avg_weight_lifeExp, color = "avg_weight_lifeExp"))
+```
+
+![](hw03_dplyr_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-5-1.png)
+
 ### 4. How is life expectancy changing over time on different continents?
 
 I did a simple analysis of looking at the change in life expectancy (five number summary), based on year and continent.
@@ -159,15 +192,36 @@ I chose to plot the data by using a line-type graph overlaying geom\_points to s
 ggplot(gapminder, aes(x=year, y=lifeExp, shape = continent, color=continent)) +
       geom_point(aes(group=continent),
                  size = 1, position = position_dodge(width = 2), alpha =0.6) +
-      geom_smooth(aes(group=continent)) +
+      geom_smooth(aes(group=continent), method = "loess") +
       scale_color_brewer(palette = "Set1") +
       theme_bw()
 ```
 
-    ## `geom_smooth()` using method = 'loess'
+![](hw03_dplyr_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-1.png)
 
-![](hw03_dplyr_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-5-1.png)
+I wanted to play with this data a little bit more so I decided to melt the summarized subset I created to see if there was anything visually interesting. The graphs didn't really provide too much interesting info overall, *but*, it's interesting to see the sudden drop in population that occured in Africa near ~1990.
 
-You can also embed plots, for example:
+``` r
+library(reshape2)
+```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+    ## 
+    ## Attaching package: 'reshape2'
+
+    ## The following object is masked from 'package:tidyr':
+    ## 
+    ##     smiths
+
+``` r
+m_lifeExp <- melt(summary_lifeExp,
+                  id.vars = c("continent", "year"),
+                  measure.vars = c("Minimum", "Q1", "Median",
+                                 "Average", "Q3","Maximum"))
+ggplot(m_lifeExp, aes(x=year, y=value, color=continent))+
+      geom_point(aes(shape=continent, group=year), size=1) +
+      geom_line(alpha=0.8) +
+      facet_wrap(~variable, ncol = 3) +
+      scale_color_brewer(palette = "Dark2")
+```
+
+![](hw03_dplyr_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-1.png)
