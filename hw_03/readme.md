@@ -1,3 +1,6 @@
+---
+output: github_document
+---
 # Fariha Khan 
 
 ## Homework 3: [Use dplyr to manipulate and explore data (also use ggplot2)](http://stat545.com/hw03_dplyr-and-more-ggplot2.html)
