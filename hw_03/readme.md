@@ -21,7 +21,9 @@
       - How is life expectancy changing over time on different continents?
 
       - Report the absolute and/or relative abundance of countries with low life expectancy over time by continent: 
+            
             - Compute some measure of worldwide life expectancy (mean/median, some other quantile, perhaps your current age)
+            
             - Determine how many countries on each continent have a life expectancy less than this benchmark, for each year.
 
       - Find countries with interesting stories. Open-ended and, therefore, hard. Promising but unsuccessful attempts are encouraged. This will generate interesting questions to follow up on in class.
