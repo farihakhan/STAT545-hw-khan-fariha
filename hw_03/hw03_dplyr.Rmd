@@ -56,6 +56,9 @@ Here, the minimum and maximum GDP per capita is summarized in a table below by c
 summary_gdpPercap %>% 
       select(continent, Maximum, Minimum) %>% 
       kable()
+```
+
+```{r}
 
 ## Display values in a table
 ggplot(summary_gdpPercap, aes(x=continent, color = continent)) +
@@ -69,9 +72,11 @@ ggplot(summary_gdpPercap, aes(x=continent, color = continent)) +
 
 #
 ### 2. Look at the spread of GDP per capita within the continents.
-```{r GDP per capita spread, fig.height=5, fig.width=10, results='markup'}
+```{r GDP per capita spread, results='markup'}
 kable(summary_gdpPercap)
+```
 
+```{r plot, fig.height=5, fig.width=10,}
 ggplot(gapminder, aes(x=gdpPercap, fill = continent)) + 
       geom_histogram(alpha=0.8,binwidth=200) +
       facet_wrap(~ continent, scales ="free", nrow = 1)

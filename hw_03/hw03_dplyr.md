@@ -84,6 +84,7 @@ Asia         113523.13     331.0000
 Europe        49357.19     973.5332
 Oceania       34435.37   10039.5956
 
+
 ```r
 ## Display values in a table
 ggplot(summary_gdpPercap, aes(x=continent, color = continent)) +
@@ -92,7 +93,7 @@ ggplot(summary_gdpPercap, aes(x=continent, color = continent)) +
        ylab("GDP per Capita")
 ```
 
-![](hw03_dplyr_files/figure-html/min gdpPercap & max gdpPercap by continent-1.png)<!-- -->
+![](hw03_dplyr_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
 > I've never used geom_linerange before - it seemed to be the best way to graphically show only two values per variable.
 
@@ -114,13 +115,14 @@ Asia           331.0000    1056.993    2646.787    8549.256   113523.13    7902.
 Europe         973.5332    7213.085   12081.749   20461.386    49357.19   14469.476
 Oceania      10039.5956   14141.859   17983.304   22214.117    34435.37   18621.609
 
+
 ```r
 ggplot(gapminder, aes(x=gdpPercap, fill = continent)) + 
       geom_histogram(alpha=0.8,binwidth=200) +
       facet_wrap(~ continent, scales ="free", nrow = 1)
 ```
 
-![](hw03_dplyr_files/figure-html/GDP per capita spread-1.png)<!-- -->
+![](hw03_dplyr_files/figure-html/plot-1.png)<!-- -->
 
 
 #
