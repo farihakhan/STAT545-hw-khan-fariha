@@ -2,7 +2,9 @@
 title: "Homework 3"
 author: "Fariha Khan"
 date: '2017-10-03'
-output: html_document
+output: 
+  html_document: 
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
