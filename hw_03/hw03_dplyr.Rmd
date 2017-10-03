@@ -50,7 +50,7 @@ summary_gdpPercap <- gapminder %>%
 ```
 
 Here, the minimum and maximum GDP per capita is summarized in a table below by continent.
-```{r min gdpPercap & max gdpPercap by continent, echo=TRUE}
+```{r min gdpPercap & max gdpPercap by continent, echo=TRUE, results='asis'}
 ## Select values for max and min 
 ## Display values in a table
 summary_gdpPercap %>% 
@@ -72,7 +72,7 @@ ggplot(summary_gdpPercap, aes(x=continent, color = continent)) +
 
 #
 ### 2. Look at the spread of GDP per capita within the continents.
-```{r GDP per capita spread, echo=TRUE, results="markdown"}
+```{r GDP per capita spread, echo=TRUE, results='asis'}
 kable(summary_gdpPercap)
 ```
 
@@ -90,6 +90,7 @@ ggplot(gapminder, aes(x=gdpPercap, fill = continent)) +
 ### 4. How is life expectancy changing over time on different continents?
 
 
+xxx
 
 You can also embed plots, for example:
 
