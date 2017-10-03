@@ -75,7 +75,7 @@ summary_gdpPercap %>%
 ``` r
 ## Display values in a table
 ggplot(summary_gdpPercap, aes(x=continent, color = continent)) +
-       geom_linerange(aes(ymin=Minimum, ymax=Maximum))+
+       geom_errorbar(aes(ymin=Minimum, ymax=Maximum))+
        ggtitle("Max and Min GDP per Capita") +
        ylab("GDP per Capita")
 ```

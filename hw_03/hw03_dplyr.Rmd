@@ -60,7 +60,7 @@ summary_gdpPercap %>%
       kable()
 ```
 
-```{r}
+```{r, echo=TRUE}
 
 ## Display values in a table
 ggplot(summary_gdpPercap, aes(x=continent, color = continent)) +
