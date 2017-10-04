@@ -225,3 +225,28 @@ ggplot(m_lifeExp, aes(x=year, y=value, color=continent))+
 ```
 
 ![](hw03_dplyr_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-1.png)
+
+Task menu
+---------
+
+I'll give it a try...
+
+``` r
+extraplot <- ggplot(m_lifeExp, aes(x=continent, y=value, color=continent))+
+      geom_point(aes(shape=continent, group=year), size=1) 
+
+exytatable1 <- gapminder %>% 
+      group_by(continent) %>% 
+      summarise_each(funs( mean, median), lifeExp)
+```
+
+    ## `summarise_each()` is deprecated.
+    ## Use `summarise_all()`, `summarise_at()` or `summarise_if()` instead.
+    ## To map `funs` over a selection of variables, use `summarise_at()`
+
+``` r
+grid.arrange(extraplot ,tableGrob(exytatable1), 
+             ncol=2,widths=c(1, 1))
+```
+
+![](hw03_dplyr_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-9-1.png)
