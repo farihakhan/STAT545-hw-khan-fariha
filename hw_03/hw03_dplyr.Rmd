@@ -166,7 +166,7 @@ ggplot(m_lifeExp, aes(x=year, y=value, color=continent))+
       scale_color_brewer(palette = "Dark2")
 ```
 
-## Task menu
+## BUT I WANT TO TRY MORE
 I'll give it a try...
 
 ```{r echo=TRUE}
@@ -178,7 +178,7 @@ exytatable1 <- gapminder %>%
       summarise_each(funs( mean, median), lifeExp)
 
 grid.arrange(extraplot ,tableGrob(exytatable1), 
-             ncol=2,widths=c(1, 1))
+             ncol=2,widths=c(1, 1), heights=c(1, 1))
 ```
 
 

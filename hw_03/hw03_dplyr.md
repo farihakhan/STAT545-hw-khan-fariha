@@ -226,8 +226,8 @@ ggplot(m_lifeExp, aes(x=year, y=value, color=continent))+
 
 ![](hw03_dplyr_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-1.png)
 
-Task menu
----------
+BUT I WANT TO TRY MORE
+----------------------
 
 I'll give it a try...
 
@@ -246,7 +246,7 @@ exytatable1 <- gapminder %>%
 
 ``` r
 grid.arrange(extraplot ,tableGrob(exytatable1), 
-             ncol=2,widths=c(1, 1))
+             ncol=2,widths=c(1, 1), heights=c(1, 1))
 ```
 
 ![](hw03_dplyr_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-9-1.png)
