@@ -15,11 +15,9 @@
 ##### Resources:
 
  - [ggplot cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
- 
- - 
 
 #
-#### **Overview:**
+## **Overview:**
 
  - Manipulate and explore a dataset with the dplyr package, complemented by visualizations made with ggplot2.
  
@@ -34,20 +32,10 @@
       - Compute a trimmed mean of life expectancy for different years. Or a weighted mean, weighting by population.
 
       - How is life expectancy changing over time on different continents?
-
-      - Report the absolute and/or relative abundance of countries with low life expectancy over time by continent:
-      
-            - Compute some measure of worldwide life expectancy (mean/median, some other quantile, perhaps your current age)
-            
-            - Determine how many countries on each continent have a life expectancy less than this benchmark, for each year.
-
-      - Find countries with interesting stories. Open-ended and, therefore, hard. Promising but unsuccessful attempts are encouraged. This will generate interesting questions to follow up on in class.
-
-      - Make up your own! Between the dplyr coverage in class and the list above, I think you get the idea.
        
  - Companion graphs
  
-#### **Progress report:**
+## **Progress report:**
 
 This assignment definitely took longer than the previous too. The open ended questions were great because it really let me explore different functions and methods. It also made it harder to decide what to graph and what was meaningful. I spent 70% of the time playing with ggplot. Even though I didn't include too many variations of graphs, I learned a lot about the different types of graphs that are out there and what they're used for. Using dplyr to analyze the data was fairly straight forward, I think the most difficult part was trying to figure out what to graph. 
 

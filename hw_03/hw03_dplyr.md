@@ -82,7 +82,7 @@ ggplot(summary_gdpPercap, aes(x=continent, color = continent)) +
 
 ![](hw03_dplyr_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-1.png)
 
-> I've never used geom\_linerange before - it seemed to be the best way to graphically show only two values per variable.
+> I've never used geom\_linerange before - it seemed to be the best way to graphically show only two values per variable. I later decided to use geom\_errorbar just strictly due to visual preference.
 
 ### 2. Look at the spread of GDP per capita within the continents.
 
