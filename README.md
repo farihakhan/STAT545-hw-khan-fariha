@@ -12,6 +12,8 @@
 
 - [*hw_01*](https://github.com/farihakhan/STAT545-hw-khan-fariha/tree/master/hw_01)
 - [*hw_02*](https://github.com/farihakhan/STAT545-hw-khan-fariha/tree/master/hw_02)
+- [*hw_03*](https://github.com/farihakhan/STAT545-hw-khan-fariha/tree/master/hw_03)
+- [*hw_04*](https://github.com/farihakhan/STAT545-hw-khan-fariha/tree/master/hw_04)
 
 
  

@@ -3,7 +3,7 @@ Homework 3
 Fariha Khan
 2017-10-03
 
-##### The goal is to manipulate and explore a dataset with the dplyr package, complemented by visualizations made with ggplot2.
+##### The goal is to manipulate and explore a dataset with the dplyr package, complemented by visualizations made with ggplot2. j
 
 Load Gapminder and tidyverse (contains dplyr and ggplot)
 
