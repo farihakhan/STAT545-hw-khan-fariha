@@ -16,6 +16,7 @@ suppressPackageStartupMessages(library(gapminder))
 suppressPackageStartupMessages(library(knitr))
 suppressPackageStartupMessages(library(reshape2))
 ```
+## General data reshaping and relationship to aggregation
 
 ### Activity 1
 #### Data reshaping cheatsheet
@@ -78,8 +79,17 @@ actv3_measures %>%
       spread(continent, Min) %>% 
       kable(align = "c", digits = 2, padding = 1,
       caption = "Minimum life expectancy per year")
-
 ```
+
+Plot the minimum life expectancy
+```{r}
+ggplot(actv3_measures, aes(x = year, y = Min, color = continent)) +
+      geom_point(aes(shape = continent)) +
+      geom_smooth(size = 1, method = 'lm', se = FALSE) +
+      scale_color_brewer(palette = "Dark2") +
+      ggtitle("Linear Model of Min Life Expectancy")
+```
+
 
 ### Activity 4
 > In Window functions, we formed a tibble with 24 rows: 2 per year, giving the country with both the lowest and highest life expectancy (in Asia). 
@@ -96,5 +106,26 @@ actv4_tbl <- gapminder %>%
   print(n = Inf)
 ```
 
+## Join, merge, look up
 
+#
+### Activity 1
+>Create a second data frame, complementary to Gapminder. 
+Join this with (part of) Gapminder using a dplyr join function and make some observations about the process and result. 
+Explore the different types of joins.
+
+
+To create a second data frame that is complementary to Gapminder, I decided to use countries as the intersecting ID. 
+```{r}
+country_list <- unique(gapminder$country)[1:10]
+currency_list <- c("AFN", "ALL", "DZD", "AOA", "ARS",
+              "AUD", "EUR", "BHD", "BDT", "EUR")
+country_currency <- data.frame(country = country_list,
+                               Currency = currency_list)
+kable(country_currency)
+```
+
+```{r}
+gapminder_currency <- left_join(gapminder, country_currency, by = "country")
+```
 

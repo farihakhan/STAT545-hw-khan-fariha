@@ -10,6 +10,9 @@ suppressPackageStartupMessages(library(knitr))
 suppressPackageStartupMessages(library(reshape2))
 ```
 
+General data reshaping and relationship to aggregation
+------------------------------------------------------
+
 ### Activity 1
 
 #### Data reshaping cheatsheet
@@ -127,6 +130,18 @@ actv3_measures %>%
 | 2002 |  39.19 |   58.14  | 42.13 |  70.84 |  79.11  |
 | 2007 |  39.61 |   60.92  | 43.83 |  71.78 |  80.20  |
 
+Plot the minimum life expectancy
+
+``` r
+ggplot(actv3_measures, aes(x = year, y = Min, color = continent)) +
+      geom_point(aes(shape = continent)) +
+      geom_smooth(size = 1, method = 'lm', se = FALSE) +
+      scale_color_brewer(palette = "Dark2") +
+      ggtitle("Linear Model of Min Life Expectancy")
+```
+
+![](hw04_tidyData_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-1.png)
+
 ### Activity 4
 
 > In Window functions, we formed a tibble with 24 rows: 2 per year, giving the country with both the lowest and highest life expectancy (in Asia). Take that table (or a similar one for all continents) and reshape it so you have one row per year or per year \* continent combination.
@@ -171,3 +186,38 @@ actv4_tbl <- gapminder %>%
     ## 22  2002       Japan  82.000
     ## 23  2007 Afghanistan  43.828
     ## 24  2007       Japan  82.603
+
+Join, merge, look up
+--------------------
+
+### Activity 1
+
+> Create a second data frame, complementary to Gapminder. Join this with (part of) Gapminder using a dplyr join function and make some observations about the process and result. Explore the different types of joins.
+
+To create a second data frame that is complementary to Gapminder, I decided to use countries as the intersecting ID.
+
+``` r
+country_list <- unique(gapminder$country)[1:10]
+currency_list <- c("AFN", "ALL", "DZD", "AOA", "ARS",
+              "AUD", "EUR", "BHD", "BDT", "EUR")
+country_currency <- data.frame(country = country_list,
+                               Currency = currency_list)
+kable(country_currency)
+```
+
+| country     | Currency |
+|:------------|:---------|
+| Afghanistan | AFN      |
+| Albania     | ALL      |
+| Algeria     | DZD      |
+| Angola      | AOA      |
+| Argentina   | ARS      |
+| Australia   | AUD      |
+| Austria     | EUR      |
+| Bahrain     | BHD      |
+| Bangladesh  | BDT      |
+| Belgium     | EUR      |
+
+``` r
+gapminder_currency <- left_join(gapminder, country_currency, by = "country")
+```
