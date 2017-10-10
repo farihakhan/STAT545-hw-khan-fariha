@@ -8,9 +8,9 @@
 
  - [Homework outline](http://stat545.com/hw04_tidy-data-joins.html)
  
- - [My README]()
+ - Assignment in [.Rdm](https://github.com/farihakhan/STAT545-hw-khan-fariha/blob/master/hw_04/hw04_tidyData.Rmd) 
  
- - My assignment in [.Rdm]() and [.md]() formats.
+ - Assignment in [.md]() 
  
 ##### Resources:
 
