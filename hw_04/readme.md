@@ -20,6 +20,8 @@
  
  - [An Introduction to reshape2](http://seananderson.ca/2013/10/19/reshape.html)
  
+ - [Cheatsheet for dplyr join functions](http://stat545.com/bit001_dplyr-cheatsheet.html)
+ 
 
 #
 ## **Overview:**
