@@ -10,11 +10,14 @@
  
  - Assignment in [.Rdm](https://github.com/farihakhan/STAT545-hw-khan-fariha/blob/master/hw_04/hw04_tidyData.Rmd) 
  
- - Assignment in [.md]() 
+ - Assignment in [.md](https://github.com/farihakhan/STAT545-hw-khan-fariha/blob/master/hw_04/hw04_tidyData.md) 
  
 ##### Resources:
 
  - [ggplot cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
+ 
+ - [Efficient R programming](https://csgillespie.github.io/efficientR/5-5-dplyr.html#renaming-columns)
+ 
 
 #
 ## **Overview:**

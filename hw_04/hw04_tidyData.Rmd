@@ -25,7 +25,7 @@ reshape2 Function    | tidyr Function
 `dcast`              |  `spread`         
 
 ### Activity 2
-Make a tibble with one row per year and columns for life expectancy for two or more countries.
+> Make a tibble with one row per year and columns for life expectancy for two or more countries.
 Use knitr::kable() to make this table look pretty in your rendered homework.
 
 I chose six countries at random for this activity, mostly because I don't know too much about them. I first created a subset of the data without applying the spread() function, so I could later plot it more easily. I used paste() to rename the column names to add the string "lifeExp" to each country column before calling kable().
@@ -53,5 +53,25 @@ ggplot(data = actv2_lifeExp, aes(x = year, y = lifeExp, color = country)) +
       geom_smooth(size = 1, method = 'lm', se = FALSE) +
       scale_color_brewer(palette = "Set2") +
       ggtitle("Linear Model of Life Expectancy from 1952 - 2007")
+```
+
+### Activity 3
+> Compute some measure of life expectancy (mean? median? min? max?) for all possible combinations of continent and year. Reshape that to have one row per year and one variable for each continent. Or the other way around: one row per continent and one variable per year.
+
+```{r lifeExp measures, echo=TRUE, warning=FALSE}
+actv3_measures <-  gapminder %>% 
+      select(continent, year, lifeExp) %>% 
+      group_by(year, continent) %>% 
+      summarise_each(funs(min, mean, max), lifeExp)
+
+kable(actv3_measures[1:15,], align = "c")
+
+```
+
+```{r}
+gapminder %>% 
+      select(continent, year, lifeExp) %>% 
+      group_by(year) %>% 
+      summarise_each(funs(min, median, mean, max), lifeExp)
 ```
 
