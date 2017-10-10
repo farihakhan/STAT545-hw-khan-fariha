@@ -71,62 +71,103 @@ ggplot(data = actv2_lifeExp, aes(x = year, y = lifeExp, color = country)) +
 
 > Compute some measure of life expectancy (mean? median? min? max?) for all possible combinations of continent and year. Reshape that to have one row per year and one variable for each continent. Or the other way around: one row per continent and one variable per year.
 
+I took the variables continent, year and life expectancy here, and took measures of the minumim, mean, and average life expectancy. The first table summarizes the first 15 rows of this data.
+
 ``` r
 actv3_measures <-  gapminder %>% 
       select(continent, year, lifeExp) %>% 
       group_by(year, continent) %>% 
-      summarise_each(funs(min, mean, max), lifeExp)
+      summarise(Min = min(lifeExp), Avg = mean(lifeExp), Max = max(lifeExp))
+
+kable(actv3_measures[1:15,],
+              align = "c", digits = 2, padding = 1,
+              caption = "Measures of life expectancy per year")
 ```
 
-    ## `summarise_each()` is deprecated.
-    ## Use `summarise_all()`, `summarise_at()` or `summarise_if()` instead.
-    ## To map `funs` over a selection of variables, use `summarise_at()`
+| year | continent |  Min  |  Avg  |  Max  |
+|:----:|:---------:|:-----:|:-----:|:-----:|
+| 1952 |   Africa  | 30.00 | 39.14 | 52.72 |
+| 1952 |  Americas | 37.58 | 53.28 | 68.75 |
+| 1952 |    Asia   | 28.80 | 46.31 | 65.39 |
+| 1952 |   Europe  | 43.59 | 64.41 | 72.67 |
+| 1952 |  Oceania  | 69.12 | 69.25 | 69.39 |
+| 1957 |   Africa  | 31.57 | 41.27 | 58.09 |
+| 1957 |  Americas | 40.70 | 55.96 | 69.96 |
+| 1957 |    Asia   | 30.33 | 49.32 | 67.84 |
+| 1957 |   Europe  | 48.08 | 66.70 | 73.47 |
+| 1957 |  Oceania  | 70.26 | 70.30 | 70.33 |
+| 1962 |   Africa  | 32.77 | 43.32 | 60.25 |
+| 1962 |  Americas | 43.43 | 58.40 | 71.30 |
+| 1962 |    Asia   | 32.00 | 51.56 | 69.39 |
+| 1962 |   Europe  | 52.10 | 68.54 | 73.68 |
+| 1962 |  Oceania  | 70.93 | 71.09 | 71.24 |
+
+To look at the data by one row per year and one variable for each continen, I took a spread of the minimum life expectancy.
 
 ``` r
-kable(actv3_measures[1:15,], align = "c")
+actv3_measures %>% 
+      select(year, continent, Min) %>% 
+      spread(continent, Min) %>% 
+      kable(align = "c", digits = 2, padding = 1,
+      caption = "Minimum life expectancy per year")
 ```
 
-| year | continent | lifeExp\_min | lifeExp\_mean | lifeExp\_max |
-|:----:|:---------:|:------------:|:-------------:|:------------:|
-| 1952 |   Africa  |    30.000    |    39.13550   |    52.724    |
-| 1952 |  Americas |    37.579    |    53.27984   |    68.750    |
-| 1952 |    Asia   |    28.801    |    46.31439   |    65.390    |
-| 1952 |   Europe  |    43.585    |    64.40850   |    72.670    |
-| 1952 |  Oceania  |    69.120    |    69.25500   |    69.390    |
-| 1957 |   Africa  |    31.570    |    41.26635   |    58.089    |
-| 1957 |  Americas |    40.696    |    55.96028   |    69.960    |
-| 1957 |    Asia   |    30.332    |    49.31854   |    67.840    |
-| 1957 |   Europe  |    48.079    |    66.70307   |    73.470    |
-| 1957 |  Oceania  |    70.260    |    70.29500   |    70.330    |
-| 1962 |   Africa  |    32.767    |    43.31944   |    60.246    |
-| 1962 |  Americas |    43.428    |    58.39876   |    71.300    |
-| 1962 |    Asia   |    31.997    |    51.56322   |    69.390    |
-| 1962 |   Europe  |    52.098    |    68.53923   |    73.680    |
-| 1962 |  Oceania  |    70.930    |    71.08500   |    71.240    |
+| year | Africa | Americas |  Asia | Europe | Oceania |
+|:----:|:------:|:--------:|:-----:|:------:|:-------:|
+| 1952 |  30.00 |   37.58  | 28.80 |  43.59 |  69.12  |
+| 1957 |  31.57 |   40.70  | 30.33 |  48.08 |  70.26  |
+| 1962 |  32.77 |   43.43  | 32.00 |  52.10 |  70.93  |
+| 1967 |  34.11 |   45.03  | 34.02 |  54.34 |  71.10  |
+| 1972 |  35.40 |   46.71  | 36.09 |  57.01 |  71.89  |
+| 1977 |  36.79 |   49.92  | 31.22 |  59.51 |  72.22  |
+| 1982 |  38.45 |   51.46  | 39.85 |  61.04 |  73.84  |
+| 1987 |  39.91 |   53.64  | 40.82 |  63.11 |  74.32  |
+| 1992 |  23.60 |   55.09  | 41.67 |  66.15 |  76.33  |
+| 1997 |  36.09 |   56.67  | 41.76 |  68.83 |  77.55  |
+| 2002 |  39.19 |   58.14  | 42.13 |  70.84 |  79.11  |
+| 2007 |  39.61 |   60.92  | 43.83 |  71.78 |  80.20  |
+
+### Activity 4
+
+> In Window functions, we formed a tibble with 24 rows: 2 per year, giving the country with both the lowest and highest life expectancy (in Asia). Take that table (or a similar one for all continents) and reshape it so you have one row per year or per year \* continent combination.
+
+First input the tibble formed in class.
 
 ``` r
-gapminder %>% 
-      select(continent, year, lifeExp) %>% 
-      group_by(year) %>% 
-      summarise_each(funs(min, median, mean, max), lifeExp)
+actv4_tbl <- gapminder %>%
+  filter(continent == "Asia") %>%
+  select(year, country, lifeExp) %>%
+  group_by(year) %>%
+  filter(min_rank(desc(lifeExp)) < 2 | min_rank(lifeExp) < 2) %>% 
+  arrange(year) %>%
+  print(n = Inf)
 ```
 
-    ## `summarise_each()` is deprecated.
-    ## Use `summarise_all()`, `summarise_at()` or `summarise_if()` instead.
-    ## To map `funs` over a selection of variables, use `summarise_at()`
-
-    ## # A tibble: 12 x 5
-    ##     year lifeExp_min lifeExp_median lifeExp_mean lifeExp_max
-    ##    <int>       <dbl>          <dbl>        <dbl>       <dbl>
-    ##  1  1952      28.801        45.1355     49.05762      72.670
-    ##  2  1957      30.332        48.3605     51.50740      73.470
-    ##  3  1962      31.997        50.8810     53.60925      73.680
-    ##  4  1967      34.020        53.8250     55.67829      74.160
-    ##  5  1972      35.400        56.5300     57.64739      74.720
-    ##  6  1977      31.220        59.6720     59.57016      76.110
-    ##  7  1982      38.445        62.4415     61.53320      77.110
-    ##  8  1987      39.906        65.8340     63.21261      78.670
-    ##  9  1992      23.599        67.7030     64.16034      79.360
-    ## 10  1997      36.087        69.3940     65.01468      80.690
-    ## 11  2002      39.193        70.8255     65.69492      82.000
-    ## 12  2007      39.613        71.9355     67.00742      82.603
+    ## # A tibble: 24 x 3
+    ## # Groups:   year [12]
+    ##     year     country lifeExp
+    ##    <int>      <fctr>   <dbl>
+    ##  1  1952 Afghanistan  28.801
+    ##  2  1952      Israel  65.390
+    ##  3  1957 Afghanistan  30.332
+    ##  4  1957      Israel  67.840
+    ##  5  1962 Afghanistan  31.997
+    ##  6  1962      Israel  69.390
+    ##  7  1967 Afghanistan  34.020
+    ##  8  1967       Japan  71.430
+    ##  9  1972 Afghanistan  36.088
+    ## 10  1972       Japan  73.420
+    ## 11  1977    Cambodia  31.220
+    ## 12  1977       Japan  75.380
+    ## 13  1982 Afghanistan  39.854
+    ## 14  1982       Japan  77.110
+    ## 15  1987 Afghanistan  40.822
+    ## 16  1987       Japan  78.670
+    ## 17  1992 Afghanistan  41.674
+    ## 18  1992       Japan  79.360
+    ## 19  1997 Afghanistan  41.763
+    ## 20  1997       Japan  80.690
+    ## 21  2002 Afghanistan  42.129
+    ## 22  2002       Japan  82.000
+    ## 23  2007 Afghanistan  43.828
+    ## 24  2007       Japan  82.603

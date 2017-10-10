@@ -18,6 +18,8 @@
  
  - [Efficient R programming](https://csgillespie.github.io/efficientR/5-5-dplyr.html#renaming-columns)
  
+ - [An Introduction to reshape2](http://seananderson.ca/2013/10/19/reshape.html)
+ 
 
 #
 ## **Overview:**

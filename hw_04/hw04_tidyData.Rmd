@@ -58,20 +58,43 @@ ggplot(data = actv2_lifeExp, aes(x = year, y = lifeExp, color = country)) +
 ### Activity 3
 > Compute some measure of life expectancy (mean? median? min? max?) for all possible combinations of continent and year. Reshape that to have one row per year and one variable for each continent. Or the other way around: one row per continent and one variable per year.
 
+
+I took the variables continent, year and life expectancy here, and took measures of the minumim, mean, and average life expectancy. The first table summarizes the first 15 rows of this data.
 ```{r lifeExp measures, echo=TRUE, warning=FALSE}
 actv3_measures <-  gapminder %>% 
       select(continent, year, lifeExp) %>% 
       group_by(year, continent) %>% 
-      summarise_each(funs(min, mean, max), lifeExp)
+      summarise(Min = min(lifeExp), Avg = mean(lifeExp), Max = max(lifeExp))
 
-kable(actv3_measures[1:15,], align = "c")
+kable(actv3_measures[1:15,],
+              align = "c", digits = 2, padding = 1,
+              caption = "Measures of life expectancy per year")
+```
+
+To look at the data by one row per year and one variable for each continen, I took a spread of the minimum life expectancy.
+```{r echo=TRUE}
+actv3_measures %>% 
+      select(year, continent, Min) %>% 
+      spread(continent, Min) %>% 
+      kable(align = "c", digits = 2, padding = 1,
+      caption = "Minimum life expectancy per year")
 
 ```
 
+### Activity 4
+> In Window functions, we formed a tibble with 24 rows: 2 per year, giving the country with both the lowest and highest life expectancy (in Asia). 
+Take that table (or a similar one for all continents) and reshape it so you have one row per year or per year * continent combination.
+
+First input the tibble formed in class.
 ```{r}
-gapminder %>% 
-      select(continent, year, lifeExp) %>% 
-      group_by(year) %>% 
-      summarise_each(funs(min, median, mean, max), lifeExp)
+actv4_tbl <- gapminder %>%
+  filter(continent == "Asia") %>%
+  select(year, country, lifeExp) %>%
+  group_by(year) %>%
+  filter(min_rank(desc(lifeExp)) < 2 | min_rank(lifeExp) < 2) %>% 
+  arrange(year) %>%
+  print(n = Inf)
 ```
+
+
 
