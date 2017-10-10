@@ -28,18 +28,30 @@ reshape2 Function    | tidyr Function
 Make a tibble with one row per year and columns for life expectancy for two or more countries.
 Use knitr::kable() to make this table look pretty in your rendered homework.
 
-```{r}
-activ2 <- as.tibble(gapminder %>% 
+I chose six countries at random for this activity, mostly because I don't know too much about them. I first created a subset of the data without applying the spread() function, so I could later plot it more easily. I used paste() to rename the column names to add the string "lifeExp" to each country column before calling kable().
+
+```{r lifeExp 2+ countries, echo=TRUE}
+actv2_lifeExp <- as.tibble(gapminder %>% 
       filter(country %in% c("Benin","Iceland","Mozambique",
                             "Sierra Leone","Venezuela", "Zambia")) %>% 
       group_by(country) %>% 
-      select(country, year, lifeExp)) 
+      select(country, year, lifeExp))
 
-kable(activ2)
-
-activ2 %>% 
-      spread(country, lifeExp) %>% 
-      kable()
+actv2_lifeExp_spr <- actv2_lifeExp %>% 
+      spread(country, lifeExp)
+names(actv2_lifeExp_spr)[2:7] <- paste(names(actv2_lifeExp_spr)[2:7], "LifeExp", sep = " ")
+kable(actv2_lifeExp_spr,
+      align = "c", digits = 2, padding = 1,
+      caption = "Life expectancy of a given country by year")
+      
 ```
 
+To plot this data:
+```{r plot lifeExp 2+ countries, echo=TRUE}
+ggplot(data = actv2_lifeExp, aes(x = year, y = lifeExp, color = country)) +
+      geom_point(aes(shape = country)) +
+      geom_smooth(size = 1, method = 'lm', se = FALSE) +
+      scale_color_brewer(palette = "Set2") +
+      ggtitle("Linear Model of Life Expectancy from 1952 - 2007")
+```
 
