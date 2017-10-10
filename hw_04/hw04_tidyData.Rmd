@@ -29,13 +29,17 @@ Make a tibble with one row per year and columns for life expectancy for two or m
 Use knitr::kable() to make this table look pretty in your rendered homework.
 
 ```{r}
-activ2 <- gapminder %>% 
-      filter(country %in% c("Mozambique", "Sierra Leone",
-                            "Venezuela", "Zambia")) %>% 
+activ2 <- as.tibble(gapminder %>% 
+      filter(country %in% c("Benin","Iceland","Mozambique",
+                            "Sierra Leone","Venezuela", "Zambia")) %>% 
       group_by(country) %>% 
-      select(country, year, lifeExp)
+      select(country, year, lifeExp)) 
 
+kable(activ2)
 
+activ2 %>% 
+      spread(country, lifeExp) %>% 
+      kable()
 ```
 
 
