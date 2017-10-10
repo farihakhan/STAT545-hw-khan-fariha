@@ -35,3 +35,4 @@ The goal of this homework is to solidify data wrangling skills by working some r
 
 
 Difficulties:
+I noticed straight off the bad that my git pathway wasn't connecting with RStudio, so I wasn't able to push anything from this project. 
