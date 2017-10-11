@@ -154,7 +154,7 @@ actv3_measures %>%
       geom_point(aes(y = Europe), shape = 4) +
       geom_point(aes(y = Oceania), shape = 5) +
       labs(title = "Min LifeExp per Continent", x = "LifeExp", 
-           y = "year", shape = "Continents")
+           y = "year", subtitle = "UNABLE TO CREATE LEGEND")
 ```
 
 ![](hw04_tidyData_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-2.png)
