@@ -193,44 +193,154 @@ kable(country_currency)
 Using left\_join()
 
 ``` r
-left_join(gapminder, country_currency, by = "country")
+left_join(gapminder, country_currency, by = "country") %>% 
+      filter(country %in% country_list) %>% 
+      distinct(country, continent, Currency) %>% 
+      kable()
 ```
 
-    ## # A tibble: 1,704 x 7
-    ##        country continent  year lifeExp      pop gdpPercap Currency
-    ##         <fctr>    <fctr> <int>   <dbl>    <int>     <dbl>   <fctr>
-    ##  1 Afghanistan      Asia  1952  28.801  8425333  779.4453      AFN
-    ##  2 Afghanistan      Asia  1957  30.332  9240934  820.8530      AFN
-    ##  3 Afghanistan      Asia  1962  31.997 10267083  853.1007      AFN
-    ##  4 Afghanistan      Asia  1967  34.020 11537966  836.1971      AFN
-    ##  5 Afghanistan      Asia  1972  36.088 13079460  739.9811      AFN
-    ##  6 Afghanistan      Asia  1977  38.438 14880372  786.1134      AFN
-    ##  7 Afghanistan      Asia  1982  39.854 12881816  978.0114      AFN
-    ##  8 Afghanistan      Asia  1987  40.822 13867957  852.3959      AFN
-    ##  9 Afghanistan      Asia  1992  41.674 16317921  649.3414      AFN
-    ## 10 Afghanistan      Asia  1997  41.763 22227415  635.3414      AFN
-    ## # ... with 1,694 more rows
+| country     | continent | Currency |
+|:------------|:----------|:---------|
+| Afghanistan | Asia      | AFN      |
+| Albania     | Europe    | ALL      |
+| Algeria     | Africa    | DZD      |
+| Angola      | Africa    | AOA      |
+| Argentina   | Americas  | ARS      |
+| Australia   | Oceania   | AUD      |
+| Austria     | Europe    | EUR      |
+| Bahrain     | Asia      | BHD      |
+| Bangladesh  | Asia      | BDT      |
+| Belgium     | Europe    | EUR      |
 
 Using inner\_join()
 
 ``` r
-inner_join(gapminder, country_currency, by = "country") 
+inner_join(gapminder, country_currency, by = "country") %>% 
+      kable()
 ```
 
-    ## # A tibble: 120 x 7
-    ##        country continent  year lifeExp      pop gdpPercap Currency
-    ##         <fctr>    <fctr> <int>   <dbl>    <int>     <dbl>   <fctr>
-    ##  1 Afghanistan      Asia  1952  28.801  8425333  779.4453      AFN
-    ##  2 Afghanistan      Asia  1957  30.332  9240934  820.8530      AFN
-    ##  3 Afghanistan      Asia  1962  31.997 10267083  853.1007      AFN
-    ##  4 Afghanistan      Asia  1967  34.020 11537966  836.1971      AFN
-    ##  5 Afghanistan      Asia  1972  36.088 13079460  739.9811      AFN
-    ##  6 Afghanistan      Asia  1977  38.438 14880372  786.1134      AFN
-    ##  7 Afghanistan      Asia  1982  39.854 12881816  978.0114      AFN
-    ##  8 Afghanistan      Asia  1987  40.822 13867957  852.3959      AFN
-    ##  9 Afghanistan      Asia  1992  41.674 16317921  649.3414      AFN
-    ## 10 Afghanistan      Asia  1997  41.763 22227415  635.3414      AFN
-    ## # ... with 110 more rows
+| country     | continent |  year|  lifeExp|        pop|   gdpPercap| Currency |
+|:------------|:----------|-----:|--------:|----------:|-----------:|:---------|
+| Afghanistan | Asia      |  1952|   28.801|    8425333|    779.4453| AFN      |
+| Afghanistan | Asia      |  1957|   30.332|    9240934|    820.8530| AFN      |
+| Afghanistan | Asia      |  1962|   31.997|   10267083|    853.1007| AFN      |
+| Afghanistan | Asia      |  1967|   34.020|   11537966|    836.1971| AFN      |
+| Afghanistan | Asia      |  1972|   36.088|   13079460|    739.9811| AFN      |
+| Afghanistan | Asia      |  1977|   38.438|   14880372|    786.1134| AFN      |
+| Afghanistan | Asia      |  1982|   39.854|   12881816|    978.0114| AFN      |
+| Afghanistan | Asia      |  1987|   40.822|   13867957|    852.3959| AFN      |
+| Afghanistan | Asia      |  1992|   41.674|   16317921|    649.3414| AFN      |
+| Afghanistan | Asia      |  1997|   41.763|   22227415|    635.3414| AFN      |
+| Afghanistan | Asia      |  2002|   42.129|   25268405|    726.7341| AFN      |
+| Afghanistan | Asia      |  2007|   43.828|   31889923|    974.5803| AFN      |
+| Albania     | Europe    |  1952|   55.230|    1282697|   1601.0561| ALL      |
+| Albania     | Europe    |  1957|   59.280|    1476505|   1942.2842| ALL      |
+| Albania     | Europe    |  1962|   64.820|    1728137|   2312.8890| ALL      |
+| Albania     | Europe    |  1967|   66.220|    1984060|   2760.1969| ALL      |
+| Albania     | Europe    |  1972|   67.690|    2263554|   3313.4222| ALL      |
+| Albania     | Europe    |  1977|   68.930|    2509048|   3533.0039| ALL      |
+| Albania     | Europe    |  1982|   70.420|    2780097|   3630.8807| ALL      |
+| Albania     | Europe    |  1987|   72.000|    3075321|   3738.9327| ALL      |
+| Albania     | Europe    |  1992|   71.581|    3326498|   2497.4379| ALL      |
+| Albania     | Europe    |  1997|   72.950|    3428038|   3193.0546| ALL      |
+| Albania     | Europe    |  2002|   75.651|    3508512|   4604.2117| ALL      |
+| Albania     | Europe    |  2007|   76.423|    3600523|   5937.0295| ALL      |
+| Algeria     | Africa    |  1952|   43.077|    9279525|   2449.0082| DZD      |
+| Algeria     | Africa    |  1957|   45.685|   10270856|   3013.9760| DZD      |
+| Algeria     | Africa    |  1962|   48.303|   11000948|   2550.8169| DZD      |
+| Algeria     | Africa    |  1967|   51.407|   12760499|   3246.9918| DZD      |
+| Algeria     | Africa    |  1972|   54.518|   14760787|   4182.6638| DZD      |
+| Algeria     | Africa    |  1977|   58.014|   17152804|   4910.4168| DZD      |
+| Algeria     | Africa    |  1982|   61.368|   20033753|   5745.1602| DZD      |
+| Algeria     | Africa    |  1987|   65.799|   23254956|   5681.3585| DZD      |
+| Algeria     | Africa    |  1992|   67.744|   26298373|   5023.2166| DZD      |
+| Algeria     | Africa    |  1997|   69.152|   29072015|   4797.2951| DZD      |
+| Algeria     | Africa    |  2002|   70.994|   31287142|   5288.0404| DZD      |
+| Algeria     | Africa    |  2007|   72.301|   33333216|   6223.3675| DZD      |
+| Angola      | Africa    |  1952|   30.015|    4232095|   3520.6103| AOA      |
+| Angola      | Africa    |  1957|   31.999|    4561361|   3827.9405| AOA      |
+| Angola      | Africa    |  1962|   34.000|    4826015|   4269.2767| AOA      |
+| Angola      | Africa    |  1967|   35.985|    5247469|   5522.7764| AOA      |
+| Angola      | Africa    |  1972|   37.928|    5894858|   5473.2880| AOA      |
+| Angola      | Africa    |  1977|   39.483|    6162675|   3008.6474| AOA      |
+| Angola      | Africa    |  1982|   39.942|    7016384|   2756.9537| AOA      |
+| Angola      | Africa    |  1987|   39.906|    7874230|   2430.2083| AOA      |
+| Angola      | Africa    |  1992|   40.647|    8735988|   2627.8457| AOA      |
+| Angola      | Africa    |  1997|   40.963|    9875024|   2277.1409| AOA      |
+| Angola      | Africa    |  2002|   41.003|   10866106|   2773.2873| AOA      |
+| Angola      | Africa    |  2007|   42.731|   12420476|   4797.2313| AOA      |
+| Argentina   | Americas  |  1952|   62.485|   17876956|   5911.3151| ARS      |
+| Argentina   | Americas  |  1957|   64.399|   19610538|   6856.8562| ARS      |
+| Argentina   | Americas  |  1962|   65.142|   21283783|   7133.1660| ARS      |
+| Argentina   | Americas  |  1967|   65.634|   22934225|   8052.9530| ARS      |
+| Argentina   | Americas  |  1972|   67.065|   24779799|   9443.0385| ARS      |
+| Argentina   | Americas  |  1977|   68.481|   26983828|  10079.0267| ARS      |
+| Argentina   | Americas  |  1982|   69.942|   29341374|   8997.8974| ARS      |
+| Argentina   | Americas  |  1987|   70.774|   31620918|   9139.6714| ARS      |
+| Argentina   | Americas  |  1992|   71.868|   33958947|   9308.4187| ARS      |
+| Argentina   | Americas  |  1997|   73.275|   36203463|  10967.2820| ARS      |
+| Argentina   | Americas  |  2002|   74.340|   38331121|   8797.6407| ARS      |
+| Argentina   | Americas  |  2007|   75.320|   40301927|  12779.3796| ARS      |
+| Australia   | Oceania   |  1952|   69.120|    8691212|  10039.5956| AUD      |
+| Australia   | Oceania   |  1957|   70.330|    9712569|  10949.6496| AUD      |
+| Australia   | Oceania   |  1962|   70.930|   10794968|  12217.2269| AUD      |
+| Australia   | Oceania   |  1967|   71.100|   11872264|  14526.1246| AUD      |
+| Australia   | Oceania   |  1972|   71.930|   13177000|  16788.6295| AUD      |
+| Australia   | Oceania   |  1977|   73.490|   14074100|  18334.1975| AUD      |
+| Australia   | Oceania   |  1982|   74.740|   15184200|  19477.0093| AUD      |
+| Australia   | Oceania   |  1987|   76.320|   16257249|  21888.8890| AUD      |
+| Australia   | Oceania   |  1992|   77.560|   17481977|  23424.7668| AUD      |
+| Australia   | Oceania   |  1997|   78.830|   18565243|  26997.9366| AUD      |
+| Australia   | Oceania   |  2002|   80.370|   19546792|  30687.7547| AUD      |
+| Australia   | Oceania   |  2007|   81.235|   20434176|  34435.3674| AUD      |
+| Austria     | Europe    |  1952|   66.800|    6927772|   6137.0765| EUR      |
+| Austria     | Europe    |  1957|   67.480|    6965860|   8842.5980| EUR      |
+| Austria     | Europe    |  1962|   69.540|    7129864|  10750.7211| EUR      |
+| Austria     | Europe    |  1967|   70.140|    7376998|  12834.6024| EUR      |
+| Austria     | Europe    |  1972|   70.630|    7544201|  16661.6256| EUR      |
+| Austria     | Europe    |  1977|   72.170|    7568430|  19749.4223| EUR      |
+| Austria     | Europe    |  1982|   73.180|    7574613|  21597.0836| EUR      |
+| Austria     | Europe    |  1987|   74.940|    7578903|  23687.8261| EUR      |
+| Austria     | Europe    |  1992|   76.040|    7914969|  27042.0187| EUR      |
+| Austria     | Europe    |  1997|   77.510|    8069876|  29095.9207| EUR      |
+| Austria     | Europe    |  2002|   78.980|    8148312|  32417.6077| EUR      |
+| Austria     | Europe    |  2007|   79.829|    8199783|  36126.4927| EUR      |
+| Bahrain     | Asia      |  1952|   50.939|     120447|   9867.0848| BHD      |
+| Bahrain     | Asia      |  1957|   53.832|     138655|  11635.7995| BHD      |
+| Bahrain     | Asia      |  1962|   56.923|     171863|  12753.2751| BHD      |
+| Bahrain     | Asia      |  1967|   59.923|     202182|  14804.6727| BHD      |
+| Bahrain     | Asia      |  1972|   63.300|     230800|  18268.6584| BHD      |
+| Bahrain     | Asia      |  1977|   65.593|     297410|  19340.1020| BHD      |
+| Bahrain     | Asia      |  1982|   69.052|     377967|  19211.1473| BHD      |
+| Bahrain     | Asia      |  1987|   70.750|     454612|  18524.0241| BHD      |
+| Bahrain     | Asia      |  1992|   72.601|     529491|  19035.5792| BHD      |
+| Bahrain     | Asia      |  1997|   73.925|     598561|  20292.0168| BHD      |
+| Bahrain     | Asia      |  2002|   74.795|     656397|  23403.5593| BHD      |
+| Bahrain     | Asia      |  2007|   75.635|     708573|  29796.0483| BHD      |
+| Bangladesh  | Asia      |  1952|   37.484|   46886859|    684.2442| BDT      |
+| Bangladesh  | Asia      |  1957|   39.348|   51365468|    661.6375| BDT      |
+| Bangladesh  | Asia      |  1962|   41.216|   56839289|    686.3416| BDT      |
+| Bangladesh  | Asia      |  1967|   43.453|   62821884|    721.1861| BDT      |
+| Bangladesh  | Asia      |  1972|   45.252|   70759295|    630.2336| BDT      |
+| Bangladesh  | Asia      |  1977|   46.923|   80428306|    659.8772| BDT      |
+| Bangladesh  | Asia      |  1982|   50.009|   93074406|    676.9819| BDT      |
+| Bangladesh  | Asia      |  1987|   52.819|  103764241|    751.9794| BDT      |
+| Bangladesh  | Asia      |  1992|   56.018|  113704579|    837.8102| BDT      |
+| Bangladesh  | Asia      |  1997|   59.412|  123315288|    972.7700| BDT      |
+| Bangladesh  | Asia      |  2002|   62.013|  135656790|   1136.3904| BDT      |
+| Bangladesh  | Asia      |  2007|   64.062|  150448339|   1391.2538| BDT      |
+| Belgium     | Europe    |  1952|   68.000|    8730405|   8343.1051| EUR      |
+| Belgium     | Europe    |  1957|   69.240|    8989111|   9714.9606| EUR      |
+| Belgium     | Europe    |  1962|   70.250|    9218400|  10991.2068| EUR      |
+| Belgium     | Europe    |  1967|   70.940|    9556500|  13149.0412| EUR      |
+| Belgium     | Europe    |  1972|   71.440|    9709100|  16672.1436| EUR      |
+| Belgium     | Europe    |  1977|   72.800|    9821800|  19117.9745| EUR      |
+| Belgium     | Europe    |  1982|   73.930|    9856303|  20979.8459| EUR      |
+| Belgium     | Europe    |  1987|   75.350|    9870200|  22525.5631| EUR      |
+| Belgium     | Europe    |  1992|   76.460|   10045622|  25575.5707| EUR      |
+| Belgium     | Europe    |  1997|   77.530|   10199787|  27561.1966| EUR      |
+| Belgium     | Europe    |  2002|   78.320|   10311970|  30485.8838| EUR      |
+| Belgium     | Europe    |  2007|   79.441|   10392226|  33692.6051| EUR      |
 
 ``` r
 inner_join(country_currency, gapminder, by = "country") 
@@ -382,23 +492,132 @@ anti_join(gapminder, country_currency, by = "country")
 Using semi\_join()
 
 ``` r
-semi_join(gapminder, country_currency, by = "country")
+semi_join(gapminder, country_currency, by = "country") %>% 
+      kable()
 ```
 
-    ## # A tibble: 120 x 6
-    ##        country continent  year lifeExp      pop gdpPercap
-    ##         <fctr>    <fctr> <int>   <dbl>    <int>     <dbl>
-    ##  1 Afghanistan      Asia  1952  28.801  8425333  779.4453
-    ##  2 Afghanistan      Asia  1957  30.332  9240934  820.8530
-    ##  3 Afghanistan      Asia  1962  31.997 10267083  853.1007
-    ##  4 Afghanistan      Asia  1967  34.020 11537966  836.1971
-    ##  5 Afghanistan      Asia  1972  36.088 13079460  739.9811
-    ##  6 Afghanistan      Asia  1977  38.438 14880372  786.1134
-    ##  7 Afghanistan      Asia  1982  39.854 12881816  978.0114
-    ##  8 Afghanistan      Asia  1987  40.822 13867957  852.3959
-    ##  9 Afghanistan      Asia  1992  41.674 16317921  649.3414
-    ## 10 Afghanistan      Asia  1997  41.763 22227415  635.3414
-    ## # ... with 110 more rows
+| country     | continent |  year|  lifeExp|        pop|   gdpPercap|
+|:------------|:----------|-----:|--------:|----------:|-----------:|
+| Afghanistan | Asia      |  1952|   28.801|    8425333|    779.4453|
+| Afghanistan | Asia      |  1957|   30.332|    9240934|    820.8530|
+| Afghanistan | Asia      |  1962|   31.997|   10267083|    853.1007|
+| Afghanistan | Asia      |  1967|   34.020|   11537966|    836.1971|
+| Afghanistan | Asia      |  1972|   36.088|   13079460|    739.9811|
+| Afghanistan | Asia      |  1977|   38.438|   14880372|    786.1134|
+| Afghanistan | Asia      |  1982|   39.854|   12881816|    978.0114|
+| Afghanistan | Asia      |  1987|   40.822|   13867957|    852.3959|
+| Afghanistan | Asia      |  1992|   41.674|   16317921|    649.3414|
+| Afghanistan | Asia      |  1997|   41.763|   22227415|    635.3414|
+| Afghanistan | Asia      |  2002|   42.129|   25268405|    726.7341|
+| Afghanistan | Asia      |  2007|   43.828|   31889923|    974.5803|
+| Albania     | Europe    |  1952|   55.230|    1282697|   1601.0561|
+| Albania     | Europe    |  1957|   59.280|    1476505|   1942.2842|
+| Albania     | Europe    |  1962|   64.820|    1728137|   2312.8890|
+| Albania     | Europe    |  1967|   66.220|    1984060|   2760.1969|
+| Albania     | Europe    |  1972|   67.690|    2263554|   3313.4222|
+| Albania     | Europe    |  1977|   68.930|    2509048|   3533.0039|
+| Albania     | Europe    |  1982|   70.420|    2780097|   3630.8807|
+| Albania     | Europe    |  1987|   72.000|    3075321|   3738.9327|
+| Albania     | Europe    |  1992|   71.581|    3326498|   2497.4379|
+| Albania     | Europe    |  1997|   72.950|    3428038|   3193.0546|
+| Albania     | Europe    |  2002|   75.651|    3508512|   4604.2117|
+| Albania     | Europe    |  2007|   76.423|    3600523|   5937.0295|
+| Algeria     | Africa    |  1952|   43.077|    9279525|   2449.0082|
+| Algeria     | Africa    |  1957|   45.685|   10270856|   3013.9760|
+| Algeria     | Africa    |  1962|   48.303|   11000948|   2550.8169|
+| Algeria     | Africa    |  1967|   51.407|   12760499|   3246.9918|
+| Algeria     | Africa    |  1972|   54.518|   14760787|   4182.6638|
+| Algeria     | Africa    |  1977|   58.014|   17152804|   4910.4168|
+| Algeria     | Africa    |  1982|   61.368|   20033753|   5745.1602|
+| Algeria     | Africa    |  1987|   65.799|   23254956|   5681.3585|
+| Algeria     | Africa    |  1992|   67.744|   26298373|   5023.2166|
+| Algeria     | Africa    |  1997|   69.152|   29072015|   4797.2951|
+| Algeria     | Africa    |  2002|   70.994|   31287142|   5288.0404|
+| Algeria     | Africa    |  2007|   72.301|   33333216|   6223.3675|
+| Angola      | Africa    |  1952|   30.015|    4232095|   3520.6103|
+| Angola      | Africa    |  1957|   31.999|    4561361|   3827.9405|
+| Angola      | Africa    |  1962|   34.000|    4826015|   4269.2767|
+| Angola      | Africa    |  1967|   35.985|    5247469|   5522.7764|
+| Angola      | Africa    |  1972|   37.928|    5894858|   5473.2880|
+| Angola      | Africa    |  1977|   39.483|    6162675|   3008.6474|
+| Angola      | Africa    |  1982|   39.942|    7016384|   2756.9537|
+| Angola      | Africa    |  1987|   39.906|    7874230|   2430.2083|
+| Angola      | Africa    |  1992|   40.647|    8735988|   2627.8457|
+| Angola      | Africa    |  1997|   40.963|    9875024|   2277.1409|
+| Angola      | Africa    |  2002|   41.003|   10866106|   2773.2873|
+| Angola      | Africa    |  2007|   42.731|   12420476|   4797.2313|
+| Argentina   | Americas  |  1952|   62.485|   17876956|   5911.3151|
+| Argentina   | Americas  |  1957|   64.399|   19610538|   6856.8562|
+| Argentina   | Americas  |  1962|   65.142|   21283783|   7133.1660|
+| Argentina   | Americas  |  1967|   65.634|   22934225|   8052.9530|
+| Argentina   | Americas  |  1972|   67.065|   24779799|   9443.0385|
+| Argentina   | Americas  |  1977|   68.481|   26983828|  10079.0267|
+| Argentina   | Americas  |  1982|   69.942|   29341374|   8997.8974|
+| Argentina   | Americas  |  1987|   70.774|   31620918|   9139.6714|
+| Argentina   | Americas  |  1992|   71.868|   33958947|   9308.4187|
+| Argentina   | Americas  |  1997|   73.275|   36203463|  10967.2820|
+| Argentina   | Americas  |  2002|   74.340|   38331121|   8797.6407|
+| Argentina   | Americas  |  2007|   75.320|   40301927|  12779.3796|
+| Australia   | Oceania   |  1952|   69.120|    8691212|  10039.5956|
+| Australia   | Oceania   |  1957|   70.330|    9712569|  10949.6496|
+| Australia   | Oceania   |  1962|   70.930|   10794968|  12217.2269|
+| Australia   | Oceania   |  1967|   71.100|   11872264|  14526.1246|
+| Australia   | Oceania   |  1972|   71.930|   13177000|  16788.6295|
+| Australia   | Oceania   |  1977|   73.490|   14074100|  18334.1975|
+| Australia   | Oceania   |  1982|   74.740|   15184200|  19477.0093|
+| Australia   | Oceania   |  1987|   76.320|   16257249|  21888.8890|
+| Australia   | Oceania   |  1992|   77.560|   17481977|  23424.7668|
+| Australia   | Oceania   |  1997|   78.830|   18565243|  26997.9366|
+| Australia   | Oceania   |  2002|   80.370|   19546792|  30687.7547|
+| Australia   | Oceania   |  2007|   81.235|   20434176|  34435.3674|
+| Austria     | Europe    |  1952|   66.800|    6927772|   6137.0765|
+| Austria     | Europe    |  1957|   67.480|    6965860|   8842.5980|
+| Austria     | Europe    |  1962|   69.540|    7129864|  10750.7211|
+| Austria     | Europe    |  1967|   70.140|    7376998|  12834.6024|
+| Austria     | Europe    |  1972|   70.630|    7544201|  16661.6256|
+| Austria     | Europe    |  1977|   72.170|    7568430|  19749.4223|
+| Austria     | Europe    |  1982|   73.180|    7574613|  21597.0836|
+| Austria     | Europe    |  1987|   74.940|    7578903|  23687.8261|
+| Austria     | Europe    |  1992|   76.040|    7914969|  27042.0187|
+| Austria     | Europe    |  1997|   77.510|    8069876|  29095.9207|
+| Austria     | Europe    |  2002|   78.980|    8148312|  32417.6077|
+| Austria     | Europe    |  2007|   79.829|    8199783|  36126.4927|
+| Bahrain     | Asia      |  1952|   50.939|     120447|   9867.0848|
+| Bahrain     | Asia      |  1957|   53.832|     138655|  11635.7995|
+| Bahrain     | Asia      |  1962|   56.923|     171863|  12753.2751|
+| Bahrain     | Asia      |  1967|   59.923|     202182|  14804.6727|
+| Bahrain     | Asia      |  1972|   63.300|     230800|  18268.6584|
+| Bahrain     | Asia      |  1977|   65.593|     297410|  19340.1020|
+| Bahrain     | Asia      |  1982|   69.052|     377967|  19211.1473|
+| Bahrain     | Asia      |  1987|   70.750|     454612|  18524.0241|
+| Bahrain     | Asia      |  1992|   72.601|     529491|  19035.5792|
+| Bahrain     | Asia      |  1997|   73.925|     598561|  20292.0168|
+| Bahrain     | Asia      |  2002|   74.795|     656397|  23403.5593|
+| Bahrain     | Asia      |  2007|   75.635|     708573|  29796.0483|
+| Bangladesh  | Asia      |  1952|   37.484|   46886859|    684.2442|
+| Bangladesh  | Asia      |  1957|   39.348|   51365468|    661.6375|
+| Bangladesh  | Asia      |  1962|   41.216|   56839289|    686.3416|
+| Bangladesh  | Asia      |  1967|   43.453|   62821884|    721.1861|
+| Bangladesh  | Asia      |  1972|   45.252|   70759295|    630.2336|
+| Bangladesh  | Asia      |  1977|   46.923|   80428306|    659.8772|
+| Bangladesh  | Asia      |  1982|   50.009|   93074406|    676.9819|
+| Bangladesh  | Asia      |  1987|   52.819|  103764241|    751.9794|
+| Bangladesh  | Asia      |  1992|   56.018|  113704579|    837.8102|
+| Bangladesh  | Asia      |  1997|   59.412|  123315288|    972.7700|
+| Bangladesh  | Asia      |  2002|   62.013|  135656790|   1136.3904|
+| Bangladesh  | Asia      |  2007|   64.062|  150448339|   1391.2538|
+| Belgium     | Europe    |  1952|   68.000|    8730405|   8343.1051|
+| Belgium     | Europe    |  1957|   69.240|    8989111|   9714.9606|
+| Belgium     | Europe    |  1962|   70.250|    9218400|  10991.2068|
+| Belgium     | Europe    |  1967|   70.940|    9556500|  13149.0412|
+| Belgium     | Europe    |  1972|   71.440|    9709100|  16672.1436|
+| Belgium     | Europe    |  1977|   72.800|    9821800|  19117.9745|
+| Belgium     | Europe    |  1982|   73.930|    9856303|  20979.8459|
+| Belgium     | Europe    |  1987|   75.350|    9870200|  22525.5631|
+| Belgium     | Europe    |  1992|   76.460|   10045622|  25575.5707|
+| Belgium     | Europe    |  1997|   77.530|   10199787|  27561.1966|
+| Belgium     | Europe    |  2002|   78.320|   10311970|  30485.8838|
+| Belgium     | Europe    |  2007|   79.441|   10392226|  33692.6051|
 
 Using full\_join()
 

@@ -134,7 +134,9 @@ left_join(gapminder, country_currency, by = "country") %>%
 
 Using inner_join()
 ```{r}
-inner_join(gapminder, country_currency, by = "country") 
+inner_join(gapminder, country_currency, by = "country") %>% 
+      kable()
+
 inner_join(country_currency, gapminder, by = "country") 
 
 ```
