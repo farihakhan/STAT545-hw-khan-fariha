@@ -125,7 +125,29 @@ country_currency <- data.frame(country = country_list,
 kable(country_currency)
 ```
 
+Using left_join()
 ```{r}
-gapminder_currency <- left_join(gapminder, country_currency, by = "country")
+left_join(gapminder, country_currency, by = "country")
 ```
 
+Using inner_join()
+```{r}
+inner_join(gapminder, country_currency, by = "country") 
+inner_join(country_currency, gapminder, by = "country") 
+
+```
+
+Using anti_join()
+```{r}
+anti_join(gapminder, country_currency, by = "country")
+```
+
+Using semi_join()
+```{r}
+semi_join(gapminder, country_currency, by = "country")
+```
+
+Using full_join()
+```{r}
+full_join(gapminder, country_currency, by = "country")
+```
