@@ -126,7 +126,7 @@ kable(country_currency)
 
 Using left_join()
 ```{r}
-left_join(gapminder, country_currency, by = "country")
+left_join(gapminder, country_currency, by = "country") 
 ```
 
 Using inner_join()
