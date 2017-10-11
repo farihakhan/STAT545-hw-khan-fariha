@@ -142,50 +142,22 @@ ggplot(actv3_measures, aes(x = year, y = Min, color = continent)) +
 
 ![](hw04_tidyData_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-1.png)
 
-### Activity 4
-
-> In Window functions, we formed a tibble with 24 rows: 2 per year, giving the country with both the lowest and highest life expectancy (in Asia). Take that table (or a similar one for all continents) and reshape it so you have one row per year or per year \* continent combination.
-
-First input the tibble formed in class.
-
 ``` r
-actv4_tbl <- gapminder %>%
-  filter(continent == "Asia") %>%
-  select(year, country, lifeExp) %>%
-  group_by(year) %>%
-  filter(min_rank(desc(lifeExp)) < 2 | min_rank(lifeExp) < 2) %>% 
-  arrange(year) %>%
-  print(n = Inf)
+## Using reshaped data
+actv3_measures %>% 
+      select(year, continent, Min) %>% 
+      spread(continent, Min) %>% 
+      ggplot(aes(x = year)) +
+      geom_point(aes(y = Africa), shape = 1) +
+      geom_point(aes(y = Americas), shape = 2) +
+      geom_point(aes(y = Asia), shape = 3) +
+      geom_point(aes(y = Europe), shape = 4) +
+      geom_point(aes(y = Oceania), shape = 5) +
+      labs(title = "Min LifeExp per Continent", x = "LifeExp", 
+           y = "year", shape = "Continents")
 ```
 
-    ## # A tibble: 24 x 3
-    ## # Groups:   year [12]
-    ##     year     country lifeExp
-    ##    <int>      <fctr>   <dbl>
-    ##  1  1952 Afghanistan  28.801
-    ##  2  1952      Israel  65.390
-    ##  3  1957 Afghanistan  30.332
-    ##  4  1957      Israel  67.840
-    ##  5  1962 Afghanistan  31.997
-    ##  6  1962      Israel  69.390
-    ##  7  1967 Afghanistan  34.020
-    ##  8  1967       Japan  71.430
-    ##  9  1972 Afghanistan  36.088
-    ## 10  1972       Japan  73.420
-    ## 11  1977    Cambodia  31.220
-    ## 12  1977       Japan  75.380
-    ## 13  1982 Afghanistan  39.854
-    ## 14  1982       Japan  77.110
-    ## 15  1987 Afghanistan  40.822
-    ## 16  1987       Japan  78.670
-    ## 17  1992 Afghanistan  41.674
-    ## 18  1992       Japan  79.360
-    ## 19  1997 Afghanistan  41.763
-    ## 20  1997       Japan  80.690
-    ## 21  2002 Afghanistan  42.129
-    ## 22  2002       Japan  82.000
-    ## 23  2007 Afghanistan  43.828
-    ## 24  2007       Japan  82.603
+![](hw04_tidyData_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-2.png)
 
 Join, merge, look up
 --------------------

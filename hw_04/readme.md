@@ -39,10 +39,9 @@ The goal of this homework is to solidify data wrangling skills by working some r
  
 ## **Progress report:**
 
-
-
 I noticed straight off the bad that my git pathway wasn't connecting with RStudio, so I wasn't able to push anything from this project. 
 
 I wanted to replace the column names within the spread df without manually typing them out, but couldn't find a way to pipe it into the kable() function. I instead changed the column names in another step, which resulted in me having to create two data subsets.
 
 The links I listed above really helped me understand how to use to spread() function. But when graphing the data, I found it easier to use the unspread data.
+When I tried to graph a scatterplot based on the reshaped data, I couldn't figure out how to get a proper legen in place.
