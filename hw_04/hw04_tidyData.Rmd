@@ -126,7 +126,10 @@ kable(country_currency)
 
 Using left_join()
 ```{r}
-left_join(gapminder, country_currency, by = "country") 
+left_join(gapminder, country_currency, by = "country") %>% 
+      filter(country %in% country_list) %>% 
+      distinct(country, continent, Currency) %>% 
+      kable()
 ```
 
 Using inner_join()
@@ -143,7 +146,8 @@ anti_join(gapminder, country_currency, by = "country")
 
 Using semi_join()
 ```{r}
-semi_join(gapminder, country_currency, by = "country")
+semi_join(gapminder, country_currency, by = "country") %>% 
+      kable()
 ```
 
 Using full_join()
