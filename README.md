@@ -14,6 +14,8 @@
 - [*hw_02*](https://github.com/farihakhan/STAT545-hw-khan-fariha/tree/master/hw_02)
 - [*hw_03*](https://github.com/farihakhan/STAT545-hw-khan-fariha/tree/master/hw_03)
 - [*hw_04*](https://github.com/farihakhan/STAT545-hw-khan-fariha/tree/master/hw_04)
+- [*hw_05*](https://github.com/farihakhan/STAT545-hw-khan-fariha/tree/master/hw_05)
+
 
 
  
@@ -35,5 +37,5 @@
 - [x] homework 1
 - [x] homework 2
 - [x] homework 3
-- [ ] homework 4
+- [x] homework 4
 - [ ] homework 5

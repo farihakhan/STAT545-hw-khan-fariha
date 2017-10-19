@@ -132,27 +132,40 @@ left_join(gapminder, country_currency, by = "country") %>%
       kable()
 ```
 
-Using inner_join()
+Using inner_join(). I'm using a year filter so all of the data doesn't appear.
 ```{r}
 inner_join(gapminder, country_currency, by = "country") %>% 
+      filter(year == 1952) %>% 
+      head(20) %>% 
       kable()
 
-inner_join(country_currency, gapminder, by = "country") 
+inner_join(country_currency, gapminder, by = "country") %>% 
+      filter(year == 1952) %>% 
+      head(20) %>% 
+      kable()
 
 ```
 
 Using anti_join()
 ```{r}
-anti_join(gapminder, country_currency, by = "country")
+anti_join(gapminder, country_currency, by = "country") %>% 
+      filter(year == 1952) %>% 
+      head(20) %>% 
+      kable()
 ```
 
 Using semi_join()
 ```{r}
 semi_join(gapminder, country_currency, by = "country") %>% 
+      filter(year == 1952) %>% 
+      head(20) %>% 
       kable()
 ```
 
 Using full_join()
 ```{r}
-full_join(gapminder, country_currency, by = "country")
+full_join(gapminder, country_currency, by = "country") %>% 
+      filter(year == 1952) %>% 
+      head(20) %>% 
+      kable()
 ```
