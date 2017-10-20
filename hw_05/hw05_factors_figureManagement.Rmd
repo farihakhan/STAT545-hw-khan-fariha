@@ -87,6 +87,7 @@ dropped_0 <- singer_factors %>%
 
 bind_rows(with_0, dropped_0) %>% 
       rename_all(funs(gsub("_forcat_fct", "", make.names(names(with_0))))) %>% 
+      column_to_rownames(var = "datatype") %>% 
       kable()
 ```
 

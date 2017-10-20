@@ -144,13 +144,16 @@ dropped_0 <- singer_factors %>%
 
 bind_rows(with_0, dropped_0) %>% 
       rename_all(funs(gsub("_forcat_fct", "", make.names(names(with_0))))) %>% 
+      column_to_rownames(var = "datatype") %>% 
       kable()
 ```
 
-|  year\_length|  name\_length|  city\_length|  year\_nlevels|  name\_nlevels|  city\_nlevels| datatype          |
-|-------------:|-------------:|-------------:|--------------:|--------------:|--------------:|:------------------|
-|         10100|         10100|         10100|             70|           2913|           1317| Before dropping 0 |
-|         10000|         10000|         10000|             69|           2879|           1309| After dropping 0  |
+    ## Warning: Setting row names on a tibble is deprecated.
+
+|                   |  year\_length|  name\_length|  city\_length|  year\_nlevels|  name\_nlevels|  city\_nlevels|
+|-------------------|-------------:|-------------:|-------------:|--------------:|--------------:|--------------:|
+| Before dropping 0 |         10100|         10100|         10100|             70|           2913|           1317|
+| After dropping 0  |         10000|         10000|         10000|             69|           2879|           1309|
 
 #### Reorder levels based on knowledge from data
 
