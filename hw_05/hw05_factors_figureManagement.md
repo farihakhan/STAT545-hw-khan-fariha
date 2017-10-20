@@ -145,27 +145,14 @@ dropped_0 <- singer_factors %>%
 bind_rows(with_0, dropped_0) %>% 
       rename_all(funs(gsub("_forcat_fct", "", make.names(names(with_0))))) %>% 
       column_to_rownames(var = "datatype") %>% 
-      kable()
+      kable(align = "c")
 ```
 
     ## Warning: Setting row names on a tibble is deprecated.
 
-|                   |  year\_length|  name\_length|  city\_length|  year\_nlevels|  name\_nlevels|  city\_nlevels|
-|-------------------|-------------:|-------------:|-------------:|--------------:|--------------:|--------------:|
-| Before dropping 0 |         10100|         10100|         10100|             70|           2913|           1317|
-| After dropping 0  |         10000|         10000|         10000|             69|           2879|           1309|
+|                   | year\_length | name\_length | city\_length | year\_nlevels | name\_nlevels | city\_nlevels |
+|-------------------|:------------:|:------------:|:------------:|:-------------:|:-------------:|:-------------:|
+| Before dropping 0 |     10100    |     10100    |     10100    |       70      |      2913     |      1317     |
+| After dropping 0  |     10000    |     10000    |     10000    |       69      |      2879     |      1309     |
 
-#### Reorder levels based on knowledge from data
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-Including Plots
----------------
-
-You can also embed plots, for example:
-
-![](hw05_factors_figureManagement_files/figure-markdown_github-ascii_identifiers/pressure-1.png)
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+### Reorder levels based on knowledge from data
