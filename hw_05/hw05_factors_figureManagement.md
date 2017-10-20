@@ -15,7 +15,6 @@ suppressPackageStartupMessages(library(reshape2))
 ## Factor management
 > Using the singer dataset
 
-*Taking a quick look at the dataset*
 
 ```r
 data("singer_locations")
@@ -41,6 +40,13 @@ glimpse(singer_locations)
 ## $ city               <chr> NA, "Chicago, IL", "New York, NY", NA, "Det...
 ```
 
+#
+### Define factor variables
+> The function factor is used to encode a vector as a factor (the terms ‘category’ and ‘enumerated type’ are also used for factors)
+
+
+*Taking a quick look at the dataset*
+
 ```r
 sapply(singer_locations, function(x) length(unique(x)))
 ```
@@ -58,13 +64,16 @@ sapply(singer_locations, function(x) length(unique(x)))
 ##               2913               1317
 ```
 
-By looking at the dataframe, I decided that the columns for year, name and city would be good variables to cast as factors because they are discrete. 
+By looking at the dataframe, I decided that the columns for year, name and city would be good variables to cast as factors because they are discrete. Using the base as.factor() function coerces missing values to NA automatically. For forcats::as_factor(), there are limitations to the values that can be used in the function.
 
-Note: forcats::as_factor() can't be applied to numeric objects, or NA values
+Note: forcats::as_factor() can't be applied to numeric objects, or NA values - producing the following errors:
 
- - I casted the year variable to characters
- 
- - I changed NA values in the catagorical variables to the string "NA" before converting to factor. I initially did this by using an ifelse statement `mutate(city = ifelse(is.na(city), "NA", city), city = as_factor(city))`, but I found the fct_explicit_na() function which essentially combines the two mutate statements into one.
+ - *Error in UseMethod("as_factor") : no applicable method for 'as_factor' applied to an object of class "c('integer', 'numeric')"*
+
+ - *Error: `idx` must contain one integer for each level of `f`*
+
+To solve these errors I casted the year variable to characters, and explicitly marked NA values. I initially changed NA values in the catagorical variables to the string "NA" before converting to factor by using the following ifelse statement: `mutate(city_forcat_fct = ifelse(is.na(city), "NA", city), city = as_factor(city_forcat_fct))`. 
+I  later found found the fct_explicit_na() function which essentially combines the two mutate statements into one.
 
 
 ```r
@@ -105,10 +114,60 @@ glimpse(singer_factors)
 ## $ city_forcat_fct    <fctr> (NA), Chicago, IL, New York, NY, (NA), Det...
 ```
 
+```r
+singer_factors %>% 
+      select(year, year_base_fct, year_forcat_fct, 
+             name, name_base_fct, name_forcat_fct,
+             city, city_base_fct, city_forcat_fct) %>% 
+      head() %>% 
+      kable(align = "c")
+```
 
-#### Define factor variables
 
-#### Drop factor / levels
+
+ year    year_base_fct    year_forcat_fct        name         name_base_fct    name_forcat_fct        city        city_base_fct    city_forcat_fct 
+------  ---------------  -----------------  ---------------  ---------------  -----------------  --------------  ---------------  -----------------
+ 2007        2007              2007               NA               NA               (NA)               NA              NA               (NA)       
+ 2004        2004              2004          Gene Chandler    Gene Chandler     Gene Chandler     Chicago, IL      Chicago, IL       Chicago, IL   
+ 1998        1998              1998            Paul Horn        Paul Horn         Paul Horn       New York, NY    New York, NY      New York, NY   
+ 1995        1995              1995               NA               NA               (NA)               NA              NA               (NA)       
+ 1968        1968              1968          Dorothy Ashby    Dorothy Ashby     Dorothy Ashby     Detroit, MI      Detroit, MI       Detroit, MI   
+ 2006        2006              2006           Barleyjuice      Barleyjuice       Barleyjuice      Pennsylvania    Pennsylvania      Pennsylvania   
+
+
+
+### Drop 0
+Filter the singer_locations data to remove observations associated with the uncorrectly inputed  year 0. Additionally, remove unused factor levels. Provide concrete information on the data before and after removing these rows and levels; address the number of rows and the levels of the affected factors.
+
+Looking at the singer_factor dataframe, I'm going to look at the same 3 variable is chose to manipulate in the previous step.
+
+
+```r
+with_0 <- singer_factors %>% 
+      select(year_forcat_fct, name_forcat_fct, city_forcat_fct) %>% 
+      summarise_all(funs(length, nlevels)) %>% 
+      mutate(datatype = "Before dropping 0")
+
+dropped_0 <- singer_factors %>% 
+      select(year_forcat_fct, name_forcat_fct, city_forcat_fct) %>% 
+      filter(year_forcat_fct != 0) %>% 
+      droplevels() %>% 
+      summarise_all(funs(length, nlevels)) %>% 
+      mutate(datatype = "After dropping 0")
+
+bind_rows(with_0, dropped_0) %>% 
+      rename_all(funs(gsub("_forcat_fct", "", make.names(names(with_0))))) %>% 
+      kable()
+```
+
+
+
+ year_length   name_length   city_length   year_nlevels   name_nlevels   city_nlevels  datatype          
+------------  ------------  ------------  -------------  -------------  -------------  ------------------
+       10100         10100         10100             70           2913           1317  Before dropping 0 
+       10000         10000         10000             69           2879           1309  After dropping 0  
+
+
 #### Reorder levels based on knowledge from data
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
