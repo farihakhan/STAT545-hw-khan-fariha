@@ -3,6 +3,8 @@
 ## Homework 5: Factor and figure management; Repo hygiene
 #### Due date: Oct 20, 2017
 
+
+ 
 #
 #### **Links**
 
@@ -11,5 +13,14 @@
  - Assignment in [.Rdm](https://github.com/farihakhan/STAT545-hw-khan-fariha/blob/master/hw_04/hw04_tidyData.Rmd) 
  
  - Assignment in [.md](https://github.com/farihakhan/STAT545-hw-khan-fariha/blob/master/hw_04/hw04_tidyData.md) 
+
+
+#
+##### **Overview**
+
  
-##### Resources:
+#
+##### **Progress**:
+
+#
+##### **Resources**
