@@ -2,16 +2,56 @@
 title: 'Homework 5: Factor and figure management'
 author: "Fariha Khan"
 date: '2017-10-17'
-output: html_document
+output: 
+  html_document: 
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r load packages}
+suppressPackageStartupMessages(library(forcats))
+suppressPackageStartupMessages(library(singer))
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(reshape2))
+```
 ## Factor management
+> Using the singer dataset
+
+*Taking a quick look at the dataset*
+```{r}
+data("singer_locations")
+glimpse(singer_locations) 
+sapply(singer_locations, function(x) length(unique(x)))
+```
+
+By looking at the dataframe, I decided that the columns for year, name and city would be good variables to cast as factors because they are discrete. 
+
+Note: forcats::as_factor() can't be applied to numeric objects, or NA values
+
+ - I casted the year variable to characters
+ 
+ - I changed NA values in the catagorical variables to the string "NA" before converting to factor. I initially did this by using an ifelse statement `mutate(city = ifelse(is.na(city), "NA", city), city = as_factor(city))`, but I found the fct_explicit_na() function which essentially combines the two mutate statements into one.
+
+```{r}
+singer_factors <- singer_locations %>% 
+      mutate(year_base_fct = as.factor(year),
+             name_base_fct = as.factor(name),
+             city_base_fct = as.factor(city),
+             year_forcat_fct = as_factor(as.character(year)),
+             name_forcat_fct = fct_explicit_na(name, na_level = "(NA)"),
+             city_forcat_fct = fct_explicit_na(city, na_level = "(NA)"))
+
+## For sanity check
+glimpse(singer_factors)
+```
+
 
 #### Define factor variables
+
 #### Drop factor / levels
 #### Reorder levels based on knowledge from data
 
@@ -20,7 +60,8 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
 ```{r cars}
-summary(cars)
+
+
 ```
 
 ## Including Plots
