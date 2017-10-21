@@ -215,5 +215,28 @@ glimpse(rds_version)
 
 ## Visualization design
 
+I wasn't too sure about what to do. I decided to ultimately make my own plot.
+I'm going to use the full set of data, with certain variable as factors.
+I'm going to use the artist names that appear most frequently and use year as changing variable to find trends.
+```{r}
+top_artist <- singer_yrdrop %>% 
+      group_by(artist_name) %>% 
+      tally() %>% 
+      arrange(desc(n)) %>% 
+      select(artist_name) %>% 
+      head(9)
+top_artists_list <- unlist(top_artist$artist_name)
+
+singer_factors %>% 
+      filter(artist_name %in% top_artists_list) %>% 
+      ggplot(aes(x = year, y = artist_hotttnesss, color = artist_name)) +
+      geom_smooth(method = lm, size = 1) +
+      labs(title="Artist hotness vs year for top 9 recurring artists")+
+      theme_bw()+
+      scale_color_brewer(palette = "Set1") +
+      theme(axis.title = element_text(size = 10),
+             plot.title = element_text(size = 10, face = "bold", hjust = 0.5))
+```
+
 
 
