@@ -378,7 +378,19 @@ plot1
 ``` r
 ## This plot wasn't very informative so I decided to create another one
 ## 
+plot2 <- singer_factors %>% 
+      filter(artist_familiarity > mean(artist_familiarity),
+             artist_hotttnesss > mean(artist_hotttnesss)) %>% 
+      ggplot(aes(x = log10(artist_familiarity), y = log10(artist_hotttnesss))) +
+      geom_smooth(method = lm, se = FALSE) +
+      geom_jitter(size = 0.5, alpha = 0.2) +
+      labs(title="Artist familiarity vs Artist hotttness")+
+      theme_bw()+
+      scale_color_brewer(palette = "Set2") 
+plot2
 ```
+
+![](hw05_factors_figureManagement_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-2.png)
 
 Writing figures to file
 -----------------------
@@ -392,3 +404,13 @@ print(plot1)
 ```
 
 ![](hw05_factors_figureManagement_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-1.png)
+
+``` r
+ggsave("familliarity_vs_hotness.png",
+       plot = plot2, dpi = 500,
+       width = 10, height = 7)
+
+print(plot2)
+```
+
+![](hw05_factors_figureManagement_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-2.png)

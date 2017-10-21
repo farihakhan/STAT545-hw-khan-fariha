@@ -239,7 +239,16 @@ plot1
 
 ## This plot wasn't very informative so I decided to create another one
 ## 
-
+plot2 <- singer_factors %>% 
+      filter(artist_familiarity > mean(artist_familiarity),
+             artist_hotttnesss > mean(artist_hotttnesss)) %>% 
+      ggplot(aes(x = log10(artist_familiarity), y = log10(artist_hotttnesss))) +
+      geom_smooth(method = lm, se = FALSE) +
+      geom_jitter(size = 0.5, alpha = 0.2) +
+      labs(title="Artist familiarity vs Artist hotttness")+
+      theme_bw()+
+      scale_color_brewer(palette = "Set2") 
+plot2
 
 ```
 
@@ -251,4 +260,10 @@ ggsave("artistHotness_top9.png",
        width = 10, height = 7)
 
 print(plot1)
+
+ggsave("familliarity_vs_hotness.png",
+       plot = plot2, dpi = 500,
+       width = 10, height = 7)
+
+print(plot2)
 ```
