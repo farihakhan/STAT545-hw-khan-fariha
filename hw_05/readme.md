@@ -10,9 +10,9 @@
 
  - [Homework outline](http://stat545.com/hw05_factor-figure-boss-repo-hygiene.html)
  
- - Assignment in [.Rdm](https://github.com/farihakhan/STAT545-hw-khan-fariha/blob/master/hw_04/hw04_tidyData.Rmd) 
+ - Assignment in [.Rdm](https://github.com/farihakhan/STAT545-hw-khan-fariha/blob/master/hw_05/hw05_factors_figureManagement.Rmd) 
  
- - Assignment in [.md](https://github.com/farihakhan/STAT545-hw-khan-fariha/blob/master/hw_04/hw04_tidyData.md) 
+ - Assignment in [.md](https://github.com/farihakhan/STAT545-hw-khan-fariha/blob/master/hw_05/hw05_factors_figureManagement.md) 
 
 
 #
