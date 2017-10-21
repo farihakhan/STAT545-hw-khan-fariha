@@ -362,15 +362,23 @@ top_artist <- singer_yrdrop %>%
       head(9)
 top_artists_list <- unlist(top_artist$artist_name)
 
-singer_factors %>% 
+plot1 <- singer_factors %>% 
       filter(artist_name %in% top_artists_list) %>% 
       ggplot(aes(x = year, y = artist_hotttnesss, color = artist_name)) +
-      geom_smooth(method = lm, size = 1) +
+      geom_smooth(method = lm, se = FALSE) +
+      geom_jitter(size = 0.5, alpha = 0.5) +
       labs(title="Artist hotness vs year for top 9 recurring artists")+
       theme_bw()+
-      scale_color_brewer(palette = "Set1") +
-      theme(axis.title = element_text(size = 10),
-             plot.title = element_text(size = 10, face = "bold", hjust = 0.5))
+      scale_color_brewer(palette = "Set1") 
+plot1
 ```
 
 ![](hw05_factors_figureManagement_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-1.png)
+
+``` r
+## This plot wasn't very informative so I decided to create another one
+## 
+```
+
+Writing figures to file
+-----------------------
