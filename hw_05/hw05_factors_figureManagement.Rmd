@@ -134,6 +134,7 @@ fct_reorder(singer_yrdrop$artist_name, singer_yrdrop$artist_hotttnesss,
 
 Create plots to compare the difference between arrange() and fct_reorder().
 I'm using the 0.75 of artist_hotttnesss as the minimum threshold for filtering artist_name
+
 ```{r plot arrange vs fct_reorder}
 ## arrange artist_name by artist_hotttnesss
 top25 <- singer_yrdrop %>% 
@@ -148,5 +149,8 @@ top25_reorder <- singer_yrdrop %>%
       ggplot(aes(x = artist_hotttnesss, y = fct_reorder(artist_name, artist_hotttnesss))) +
       geom_point() +
       theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+top25
+top25_reorder
 ```
 

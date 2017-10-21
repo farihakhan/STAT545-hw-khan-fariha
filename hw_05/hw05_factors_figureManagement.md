@@ -235,4 +235,14 @@ top25_reorder <- singer_yrdrop %>%
       ggplot(aes(x = artist_hotttnesss, y = fct_reorder(artist_name, artist_hotttnesss))) +
       geom_point() +
       theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+top25
 ```
+
+![](hw05_factors_figureManagement_files/figure-markdown_github-ascii_identifiers/plot%20arrange%20vs%20fct_reorder-1.png)
+
+``` r
+top25_reorder
+```
+
+![](hw05_factors_figureManagement_files/figure-markdown_github-ascii_identifiers/plot%20arrange%20vs%20fct_reorder-2.png)
