@@ -382,3 +382,13 @@ plot1
 
 Writing figures to file
 -----------------------
+
+``` r
+ggsave("artistHotness_top9.png",
+       plot = plot1, dpi = 500,
+       width = 10, height = 7)
+
+print(plot1)
+```
+
+![](hw05_factors_figureManagement_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-1.png)
