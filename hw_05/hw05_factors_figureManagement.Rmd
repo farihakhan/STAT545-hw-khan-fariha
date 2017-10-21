@@ -179,10 +179,41 @@ and contained the variables for year, artist name and title.
 ```{r df for top25 artist_hotttnesss}
 top25_hotness <- singer_yrdrop %>% 
       filter(artist_hotttnesss >= 0.75) %>% 
-      select(year, artist_name, title, artist_hotttnesss)
+      select(year, artist_name, title, artist_hotttnesss) %>% 
+      arrange(artist_name)
 glimpse(top25_hotness)
 
 ## Save file as csv
 write_csv(top25_hotness, "top25_hotness.csv")
+saveRDS(top25_hotness, "top25_hotness.rds")
+dput(top25_hotness, "top25_hotness.txt")
 ```
+
+##### Read in top25_hotness files to see if the order of artist name remains the same
+
+Read in using read_csv()
+```{r read in csv, echo=TRUE}
+csv_version <- read_csv("top25_hotness.csv")
+glimpse(csv_version)
+```
+ - Reading the file using csv does not retain the same variable types!!
+ 
+ - The order of the artists didn't change however
+ 
+ 
+Read in using readRDS()
+```{r read in rds, echo=TRUE}
+rds_version <- readRDS("top25_hotness.rds")
+glimpse(rds_version)
+```
+ - Reading the file using shows no warning messages
+ 
+ - Looking at the glimpe of the df shows that the data types were kept the same
+ 
+ - The order of the artists didn't change
+
+
+## Visualization design
+
+
 

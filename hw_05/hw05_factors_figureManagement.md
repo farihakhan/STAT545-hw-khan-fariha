@@ -278,18 +278,75 @@ I'm going to save a subsetted dataframe that contains data filtered artist\_hott
 ``` r
 top25_hotness <- singer_yrdrop %>% 
       filter(artist_hotttnesss >= 0.75) %>% 
-      select(year, artist_name, title, artist_hotttnesss)
+      select(year, artist_name, title, artist_hotttnesss) %>% 
+      arrange(artist_name)
 glimpse(top25_hotness)
 ```
 
     ## Observations: 81
     ## Variables: 4
-    ## $ year              <fctr> 2008, 2003, 2002, 2009, 2005, 2007, 1987, 2...
-    ## $ artist_name       <fctr> Josh Groban, Alicia Keys, Maroon 5, Jason A...
-    ## $ title             <fctr> Awake [Live], You Don't Know My Name, Sunda...
-    ## $ artist_hotttnesss <dbl> 0.7551499, 0.7786736, 0.8433803, 0.8492910, ...
+    ## $ year              <fctr> 2004, 2006, 2003, 2003, 2003, 2009, 2005, 2...
+    ## $ artist_name       <fctr> Akon, Akon / Red Café, Alicia Keys, Alicia ...
+    ## $ title             <fctr> I Won't, Shake Down, You Don't Know My Name...
+    ## $ artist_hotttnesss <dbl> 0.8267770, 0.8267770, 0.7786736, 0.7786736, ...
 
 ``` r
 ## Save file as csv
 write_csv(top25_hotness, "top25_hotness.csv")
+saveRDS(top25_hotness, "top25_hotness.rds")
+dput(top25_hotness, "top25_hotness.txt")
 ```
+
+##### Read in top25\_hotness files to see if the order of artist name remains the same
+
+Read in using read\_csv()
+
+``` r
+csv_version <- read_csv("top25_hotness.csv")
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   year = col_integer(),
+    ##   artist_name = col_character(),
+    ##   title = col_character(),
+    ##   artist_hotttnesss = col_double()
+    ## )
+
+``` r
+glimpse(csv_version)
+```
+
+    ## Observations: 81
+    ## Variables: 4
+    ## $ year              <int> 2004, 2006, 2003, 2003, 2003, 2009, 2005, 20...
+    ## $ artist_name       <chr> "Akon", "Akon / Red Café", "Alicia Keys", "A...
+    ## $ title             <chr> "I Won't", "Shake Down", "You Don't Know My ...
+    ## $ artist_hotttnesss <dbl> 0.8267770, 0.8267770, 0.7786736, 0.7786736, ...
+
+-   Reading the file using csv does not retain the same variable types!!
+
+-   The order of the artists didn't change however
+
+Read in using readRDS()
+
+``` r
+rds_version <- readRDS("top25_hotness.rds")
+glimpse(rds_version)
+```
+
+    ## Observations: 81
+    ## Variables: 4
+    ## $ year              <fctr> 2004, 2006, 2003, 2003, 2003, 2009, 2005, 2...
+    ## $ artist_name       <fctr> Akon, Akon / Red Café, Alicia Keys, Alicia ...
+    ## $ title             <fctr> I Won't, Shake Down, You Don't Know My Name...
+    ## $ artist_hotttnesss <dbl> 0.8267770, 0.8267770, 0.7786736, 0.7786736, ...
+
+-   Reading the file using shows no warning messages
+
+-   Looking at the glimpe of the df shows that the data types were kept the same
+
+-   The order of the artists didn't change
+
+Visualization design
+--------------------
