@@ -221,28 +221,75 @@ fct_reorder(singer_yrdrop$artist_name, singer_yrdrop$artist_hotttnesss,
 
 Create plots to compare the difference between arrange() and fct\_reorder(). I'm using the 0.75 of artist\_hotttnesss as the minimum threshold for filtering artist\_name
 
+##### plotting arrange()
+
+Plotting the values by only using arrange does not reorder the points on the graph
+
 ``` r
 ## arrange artist_name by artist_hotttnesss
 top25 <- singer_yrdrop %>% 
-      filter(artist_hotttnesss >= 0.73) %>% 
+      filter(artist_hotttnesss >= 0.75) %>% 
       arrange(desc(artist_hotttnesss)) %>% 
       ggplot(aes(x = artist_hotttnesss, y = artist_name)) +
       geom_point() +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-top25_reorder <- singer_yrdrop %>% 
-      filter(artist_hotttnesss >= 0.73) %>% 
-      ggplot(aes(x = artist_hotttnesss, y = fct_reorder(artist_name, artist_hotttnesss))) +
-      geom_point() +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1))
+      theme(axis.text.y = element_text(angle = 15, hjust = 1))
 
 top25
 ```
 
-![](hw05_factors_figureManagement_files/figure-markdown_github-ascii_identifiers/plot%20arrange%20vs%20fct_reorder-1.png)
+![](hw05_factors_figureManagement_files/figure-markdown_github-ascii_identifiers/plot%20arrange-1.png)
+
+##### plotting fct\_reorder()
+
+Plotting the values by only using fct\_reorder() gives an graph with ordered points
 
 ``` r
+top25_reorder <- singer_yrdrop %>% 
+      filter(artist_hotttnesss >= 0.75) %>% 
+      ggplot(aes(x = artist_hotttnesss, y = fct_reorder(artist_name, artist_hotttnesss))) +
+      geom_point() +
+      theme(axis.text.y = element_text(angle = 15, hjust = 1))
 top25_reorder
 ```
 
-![](hw05_factors_figureManagement_files/figure-markdown_github-ascii_identifiers/plot%20arrange%20vs%20fct_reorder-2.png)
+![](hw05_factors_figureManagement_files/figure-markdown_github-ascii_identifiers/plot%20fct_reorder-1.png)
+
+##### plotting arrange() + fct\_reorder()
+
+Plotting the values by using arrange () AND fct\_reorder() also gives an graph with ordered points
+
+``` r
+top25_arrange_reorder <- singer_yrdrop %>% 
+      filter(artist_hotttnesss >= 0.75) %>% 
+      arrange(desc(artist_hotttnesss)) %>%
+      ggplot(aes(x = artist_hotttnesss, y = fct_reorder(artist_name, artist_hotttnesss))) +
+      geom_point() +
+      theme(axis.text.x = element_text(angle = 15, hjust = 1))
+top25_arrange_reorder
+```
+
+![](hw05_factors_figureManagement_files/figure-markdown_github-ascii_identifiers/plot%20fct_reorde%20+%20arrange-1.png)
+
+File I/O
+--------
+
+I'm going to save a subsetted dataframe that contains data filtered artist\_hotttnesss &gt;= 0.75, and contained the variables for year, artist name and title.
+
+``` r
+top25_hotness <- singer_yrdrop %>% 
+      filter(artist_hotttnesss >= 0.75) %>% 
+      select(year, artist_name, title, artist_hotttnesss)
+glimpse(top25_hotness)
+```
+
+    ## Observations: 81
+    ## Variables: 4
+    ## $ year              <fctr> 2008, 2003, 2002, 2009, 2005, 2007, 1987, 2...
+    ## $ artist_name       <fctr> Josh Groban, Alicia Keys, Maroon 5, Jason A...
+    ## $ title             <fctr> Awake [Live], You Don't Know My Name, Sunda...
+    ## $ artist_hotttnesss <dbl> 0.7551499, 0.7786736, 0.8433803, 0.8492910, ...
+
+``` r
+## Save file as csv
+write_csv(top25_hotness, "top25_hotness.csv")
+```
