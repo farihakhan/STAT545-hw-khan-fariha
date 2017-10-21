@@ -133,26 +133,88 @@ Looking at the singer\_factor dataframe, I'm going to look at the same 3 variabl
 with_0 <- singer_factors %>% 
       select(year_forcat_fct, name_forcat_fct, city_forcat_fct) %>% 
       summarise_all(funs(length, nlevels)) %>% 
-      mutate(datatype = "Before dropping 0")
+      mutate(levels = "ALL")
 
 dropped_0 <- singer_factors %>% 
       select(year_forcat_fct, name_forcat_fct, city_forcat_fct) %>% 
       filter(year_forcat_fct != 0) %>% 
       droplevels() %>% 
       summarise_all(funs(length, nlevels)) %>% 
-      mutate(datatype = "After dropping 0")
+      mutate(levels = "DROPPED 0")
 
 bind_rows(with_0, dropped_0) %>% 
       rename_all(funs(gsub("_forcat_fct", "", make.names(names(with_0))))) %>% 
-      column_to_rownames(var = "datatype") %>% 
+      column_to_rownames(var = "levels") %>% 
       kable(align = "c")
 ```
 
     ## Warning: Setting row names on a tibble is deprecated.
 
-|                   | year\_length | name\_length | city\_length | year\_nlevels | name\_nlevels | city\_nlevels |
-|-------------------|:------------:|:------------:|:------------:|:-------------:|:-------------:|:-------------:|
-| Before dropping 0 |     10100    |     10100    |     10100    |       70      |      2913     |      1317     |
-| After dropping 0  |     10000    |     10000    |     10000    |       69      |      2879     |      1309     |
+|           | year\_length | name\_length | city\_length | year\_nlevels | name\_nlevels | city\_nlevels |
+|-----------|:------------:|:------------:|:------------:|:-------------:|:-------------:|:-------------:|
+| ALL       |     10100    |     10100    |     10100    |       70      |      2913     |      1317     |
+| DROPPED 0 |     10000    |     10000    |     10000    |       69      |      2879     |      1309     |
 
 ### Reorder levels based on knowledge from data
+
+Reorder year in different ways
+
+``` r
+singer_yrdrop <- singer_locations %>% 
+      mutate(year = as_factor(as.character(year)),
+             artist_name = fct_explicit_na(artist_name, na_level = "(NA)"),
+             title = fct_explicit_na(title, na_level = "(NA)")) %>% 
+      filter(year != 0) %>% 
+      droplevels()
+
+## Unordered levels
+singer_yrdrop$artist_name %>%
+      levels() %>% head()
+```
+
+    ## [1] "'t Hof Van Commerce" "'Til Tuesday"        "[re:jazz]"          
+    ## [4] "*Shels"              "+44"                 "10 Years"
+
+``` r
+## order by frequency
+singer_yrdrop$artist_name %>% 
+      fct_infreq() %>%
+      levels() %>% head()
+```
+
+    ## [1] "The Boo Radleys" "U2"              "Floyd Cramer"    "Jerry Goldsmith"
+    ## [5] "Jimi Hendrix"    "Pearl Jam"
+
+``` r
+## order by reverse frequency
+singer_yrdrop$artist_name %>% 
+      fct_infreq() %>% fct_rev() %>% 
+      levels() %>% head()
+```
+
+    ## [1] "µ-ziq"                      "ZZ Top"                    
+    ## [3] "Zykos"                      "Zuco 103 feat. Dani Macaco"
+    ## [5] "Zounds"                     "Zombina And The Skeletones"
+
+Reorder artist\_name based on other variables using forcats::fct\_reorder()
+
+``` r
+## order artist_name by max artist_hotttnesss
+fct_reorder(singer_yrdrop$artist_name, singer_yrdrop$artist_hotttnesss,
+            fun = max) %>% 
+      levels() %>% head()
+```
+
+    ## [1] "A La Carte Brass & Percussion" "Abe Duque feat. Blake Baxter" 
+    ## [3] "Abi Wallenstein"               "Abstürzende Brieftauben"      
+    ## [5] "After Dark"                    "ÄI-TIEM"
+
+``` r
+## reverse
+fct_reorder(singer_yrdrop$artist_name, singer_yrdrop$artist_hotttnesss,
+            fun = max, .desc = TRUE) %>% 
+      levels() %>% head()
+```
+
+    ## [1] "Daft Punk"       "Black Eyed Peas" "Coldplay"        "Rihanna"        
+    ## [5] "Rihanna / Slash" "Michael Jackson"

@@ -24,3 +24,8 @@
 
 #
 ##### **Resources**
+
+ - [Forcats vignette:](https://cran.r-project.org/web/packages/forcats/forcats.pdf)
+ - [Old stat545 notes:](https://github.com/STAT545-UBC/STAT545-UBC.github.io/blob/master/block014_factors.md)
+ 
+ 

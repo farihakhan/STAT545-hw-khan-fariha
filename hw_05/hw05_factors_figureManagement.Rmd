@@ -76,22 +76,59 @@ Looking at the singer_factor dataframe, I'm going to look at the same 3 variable
 with_0 <- singer_factors %>% 
       select(year_forcat_fct, name_forcat_fct, city_forcat_fct) %>% 
       summarise_all(funs(length, nlevels)) %>% 
-      mutate(datatype = "Before dropping 0")
+      mutate(levels = "ALL")
 
 dropped_0 <- singer_factors %>% 
       select(year_forcat_fct, name_forcat_fct, city_forcat_fct) %>% 
       filter(year_forcat_fct != 0) %>% 
       droplevels() %>% 
       summarise_all(funs(length, nlevels)) %>% 
-      mutate(datatype = "After dropping 0")
+      mutate(levels = "DROPPED 0")
 
 bind_rows(with_0, dropped_0) %>% 
       rename_all(funs(gsub("_forcat_fct", "", make.names(names(with_0))))) %>% 
-      column_to_rownames(var = "datatype") %>% 
+      column_to_rownames(var = "levels") %>% 
       kable(align = "c")
 ```
 
 
 ### Reorder levels based on knowledge from data
+Reorder year in different ways
 
+```{r}
+singer_yrdrop <- singer_locations %>% 
+      mutate(year = as_factor(as.character(year)),
+             artist_name = fct_explicit_na(artist_name, na_level = "(NA)"),
+             title = fct_explicit_na(title, na_level = "(NA)")) %>% 
+      filter(year != 0) %>% 
+      droplevels()
+
+## Unordered levels
+singer_yrdrop$artist_name %>%
+      levels() %>% head()
+      
+
+## order by frequency
+singer_yrdrop$artist_name %>% 
+      fct_infreq() %>%
+      levels() %>% head()
+
+## order by reverse frequency
+singer_yrdrop$artist_name %>% 
+      fct_infreq() %>% fct_rev() %>% 
+      levels() %>% head()
+```
+
+Reorder artist_name based on other variables using forcats::fct_reorder()
+```{r}
+## order artist_name by max artist_hotttnesss
+fct_reorder(singer_yrdrop$artist_name, singer_yrdrop$artist_hotttnesss,
+            fun = max) %>% 
+      levels() %>% head()
+
+## reverse
+fct_reorder(singer_yrdrop$artist_name, singer_yrdrop$artist_hotttnesss,
+            fun = max, .desc = TRUE) %>% 
+      levels() %>% head()
+```
 
