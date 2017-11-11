@@ -1,0 +1,442 @@
+---
+title: 'Homework 06: Data wrangling wrap up'
+author: "Fariha Khan"
+date: '2017-11-07'
+output: 
+  html_document: 
+    keep_md: yes
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+
+# 14.1 Introduction
+Use the following packages:
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(stringr))
+suppressPackageStartupMessages(library(stringi))
+suppressPackageStartupMessages(library(htmlwidgets))
+```
+
+# 14.2 String basics
+
+ - String length
+ - Combining strings
+ - Subsetting strings
+ - Locales
+ - Exercises
+ 
+### 14.2.5 Exercises
+
+*1. In code that doesn’t use stringr, you’ll often see paste() and paste0(). What’s the difference between the two functions? What stringr function are they equivalent to? How do the functions differ in their handling of NA?*
+
+The paste() function is used to concatenate strings. It converts character vectors into character strings and seperates strings by spaces by default, or by the parameter given to *sep*. The function takes three arguments: paste (..., sep = " ", collapse = NULL)
+
+The paste0() function is similar to paste(), in that it also takes character vectors and concatenates them to a string. This functions takes two arguments: paste0(..., collapse = NULL), and assumes that that sep = "".
+
+
+stringr::str_c() works by joining multiple strings into one string. It is similar to **paste0()**; it doesn't seperate strings with spaces by default. If any arguments are NA, str_c() will return NA, where are paste() and paste0() convert NAs into a string.
+
+*2. In your own words, describe the difference between the sep and collapse arguments to str_c().*
+
+str_c(..., sep = "", collapse = NULL)
+The sep= argument dictates the string that is inserted between the input vectors. 
+The collapse= argument used to collapse the the input vectors into a character vector of length 1 based on the string input.
+
+
+*3. Use str_length() and str_sub() to extract the middle character from a string. What will you do if the string has an even number of characters?*
+
+str_length(string)
+str_sub(string, start = 1L, end = -1L)
+
+```{r 14.2.5.3}
+x <- c("1", "12", "123", "1234", "12345", "123456")
+x_length <- str_length(x)
+middle <- ceiling(x_length/2)
+str_sub(x, middle, middle)
+```
+
+Characters with even number of characters cannot return a single middle character; the str returned using ceiling will return the first of the two middle characters.
+
+*4. What does str_wrap() do? When might you want to use it?*
+
+str_wrap(string, width = 80, indent = 0, exdent = 0)
+
+The str_wrap() function is used to wrap strings around formatted text for given dimensions. It can be used for formatting paragraphs and large text blocks.
+
+*5. What does str_trim() do? What’s the opposite of str_trim()?*
+
+str_trim(string, side = c("both", "left", "right"))
+The str_trim() function is used to trim whitespace (ie. removes spaces/tabs) from the start and/or end of strings. 
+
+str_pad(string, width, side = c("left", "right", "both"), pad = " ")
+The opposite to this function is str_pad(), which adds whitespaces to the start and/or end of strings.
+
+*6. Write a function that turns (e.g.) a vector c("a", "b", "c") into the string a, b, and c. Think carefully about what it should do if given a vector of length 0, 1, or 2.*
+
+```{r 14.2.5.6}
+return_abc <- function(x){
+      x_length <- length(x)
+      if(x_length > 1){
+            str_c(str_c(x[-x_length], collapse = ", "),
+                  x[x_length], sep= ", and ")
+      } else {
+            x
+      }
+}
+
+return_abc("")
+return_abc(letters[1])
+return_abc(letters[1:2])
+return_abc(letters[1:4])
+```
+
+
+
+# 14.3 Matching patterns with regular expressions
+
+### 14.3.1.1 Exercises
+
+*1. Explain why each of these strings don’t match a \: "\", "\\", "\\\".*
+
+In R regexps use the backslash, \, to escape specific expression behaviours. A backslash will cause R to skip the the character following it.
+ - The first string will escape to the next character - the statement will be incomplete if the string is " \ "
+ - The second string will escape the first \ and print \
+ - The second string will escape the first \ and print \\
+ 
+*2. How would you match the sequence* "'\\ *?*
+
+Not sure - this sequence won't be recognized as complete, since the \ will escape the next character. I suppose it can only be matched with itself or using indexes...
+
+*3. What patterns will the regular expression \\..\\..\\.. match? How would you represent it as a string?*
+
+The first \. creates the wildcard, followed by a dot. This expression will match (any character + .) 3 times
+
+### 14.3.2.1 Exercises
+*1. How would you match the literal string "\$^$" ?*
+
+The ^ indicates the beginning of string and $ indicates the end of a string. 
+Because they are both anchors, they need to be escaped to act as a string. 
+The expression following expression will match the literal string.
+```{r}
+literal_string <- "$^$"
+str_view(literal_string, "\\$\\^\\$")
+```
+
+*2. Given the corpus of common words in stringr::words, create regular expressions that find all words that:*
+
+ - Start with “y”: `r str_view(words, "^y", match = TRUE)`
+ 
+ - End with “x”: `r str_view(words, "x$", match = TRUE)`
+ 
+ - Are exactly three letters long: `r str_view(words, "^[a-z].[a-z]$", match = TRUE)`
+ 
+ - Have seven letters or more: `r str_view(words, "^[a-z]{6}.", match = TRUE)`
+ 
+Since this list is long, you might want to use the match argument to str_view() to show only the matching or non-matching words.
+
+### 14.3.3.1 Exercises
+
+*1. Create regular expressions to find all words that:*
+
+ - Start with a vowel: `r str_view(words, "^[aeiou], match = TRUE")`
+
+ - That only contain consonants: `r str_view(words, "^[^aeiou]+$", match=TRUE)`
+
+ - End with ed, but not with eed: `r str_view(words, "[^e]ed$", match=TRUE)`
+
+ - End with ing or ise: `r str_view(words, "ing$|ise$", match=TRUE)`
+
+*2. Empirically verify the rule “i before e except after c”*
+```{r i before e}
+## i before e, except after c
+length(str_subset(words, "(cei|[^c]ie)"))
+str_subset(words, "(cei|[^c]ie)")
+
+## i after e
+length(str_subset(words, "(cie|[^c]ei)"))
+str_subset(words, "(cie|[^c]ei)")
+```
+
+*3. Is “q” always followed by a “u”?*
+```{r q before u}
+## q before u
+length(str_subset(words, "qu"))
+str_subset(words, "qu")
+
+## u before q
+length(str_subset(words, "(uq|q[^u])"))
+str_subset(words, "(uq|q[^u])")
+```
+
+*4. Write a regular expression that matches a word if it’s probably written in British English, not American English.*
+Using spelling differences: 
+|**American**|**British**|
+|------------|-----------|
+| -er        | -re       |
+| -nse       | -nce      |
+| -ize       | -ise      |
+| -or        | -our      |
+
+```{r, echo=TRUE, results='markup'}
+str_view(words, "([^aeiou]re|nce|ise|our)$", match = TRUE)
+```
+
+
+*5. Create a regular expression that will match telephone numbers as commonly written in your country.*
+Telephone numbers in canada consist of a 3-digit area code, followed by a 7-digit number:
+(xxx-xxx-xxxx) or (xxx xxx xxxx)
+
+```{r}
+numbers <- c("123 456 7890", "113 432-4343", "444 3434", "111-444-3333", "11 1 4443333")
+str_view(numbers, "^\\d{3}(\\s|-)\\d{3}(\\s|-)\\d{4}$", match = TRUE)
+```
+
+
+### 14.3.4.1 Exercises
+
+*1. Describe the equivalents of * ?, +, * in {m,n} form.
+
+ - ?: 0 or 1
+ - +: 1 or more
+ - *: 0 or more
+ - {n}: exactly n
+ - {n,}: n or more
+ - {,m}: at most m
+ - {n,m}: between n and m
+
+ ? is equivalent to {,1} because it matches at most 1 time. 
+ + is equivalent to {1,} because it matches 1 or more times. 
+ * doesn't have an equivalent because can range from 0 up to infinity.
+ 
+*2. Describe in words what these regular expressions match: (read carefully to see if I’m using a regular expression or a string that defines a regular expression.)*
+
+ - ^.*$: Any string
+ 
+ - "\\\\{.+\\}": A string that contains curly brackets surrounded by at least one character
+ 
+ - \d{4}-\d{2}-\d{2}: 4Digits-2Digits-2Digits
+ 
+ - "\\\\\\{4}": This will match a backlash four times
+
+3. Create regular expressions to find all words that:
+
+ - Start with three consonants: `r str_view(words, "^[^aeiou]{3}", match = TRUE)`
+ 
+ - Have three or more vowels in a row.: `r str_view(words, "[aeiou]{3,}", match = TRUE)`
+ 
+ - Have two or more vowel-consonant pairs in a row: 
+ `r str_view(words, "([aeiou][^aeiou]){2,}", match = TRUE)`
+ 
+
+### 14.3.5.1 Exercises
+
+1. Describe, in words, what these expressions will match:
+
+ - (.)\1\1 : A character repeated twice
+ 
+ - "(.)(.)\\2\\1": Any two characters occuring once, and then repeated in reverse
+ 
+ - (..)\1: Two characters repeated once
+ 
+ - "(.).\\1.\\1": A string of 5 characters, where the 1st, 3rd and 5th characters are repeated and the 2nd and 4th can be anything.
+ 
+ - "(.)(.)(.).*\\3\\2\\1": String of 6 or more characters, where the first 3 are repeated in reverse between any character (.) repeated 0 to inifnity times
+ 
+2. Construct regular expressions to match words that:
+
+ - Start and end with the same character: `r str_view(words, "^(.).*\\1$", match=TRUE)`
+
+ - Contain a repeated pair of letters (e.g. “church” contains “ch” repeated twice.):
+ `r str_view(words, "^(..).*\\1$", match=TRUE)`
+
+ - Contain one letter repeated in at least three places (e.g. “eleven” contains three “e”s.)
+ `r str_view(words, "(.).*\\1.*\\1", match=TRUE)`
+ 
+# 14.4 Tools
+### 14.4.2 Exercises
+
+1. For each of the following challenges, try solving it by using both a single regular expression, and a combination of multiple str_detect() calls.
+
+ - Find all words that start or end with x: 
+```{r}
+words[str_detect(words, "^x|x$")]
+i <- str_detect(words, "^x")
+j <- str_detect(words, "x$")
+head(list(words[i|j]))
+```
+
+ - Find all words that start with a vowel and end with a consonant.
+ 
+
+```{r}
+words[str_detect(words, "^[aeiou]|[^aeiou]$")]
+
+i <- str_detect(words, "^[aeiou]")
+j <- str_detect(words, "[^aeiou]$")
+words[i&j] %>% 
+      head()
+```
+
+ - Are there any words that contain at least one of each different vowel?
+ 
+```{r}
+words[str_detect(words, "a") &
+      str_detect(words, "e") &
+      str_detect(words, "i") &
+      str_detect(words, "o") &
+      str_detect(words, "u")]
+```
+
+2. What word has the highest number of vowels? What word has the highest proportion of vowels? 
+```{r}
+## Highest number of vowels
+max(str_count(words, "[aeiou]"))
+
+## Get proportions - than extract the largest value
+proportion <- max(str_count(words, "[aeiou]"))/str_length(words)
+words[which(proportion == max(proportion))] ##??????
+
+```
+
+### 14.4.3.1 Exercises
+
+*1. In the previous example, you might have noticed that the regular expression matched “flickered”, which is not a colour. Modify the regex to fix the problem.*
+
+
+*2. From the Harvard sentences data, extract:*
+
+ - The first word from each sentence: `r str_extract(sentences, "^\\w+") %>% head(10)`
+
+ - All words ending in ing: 
+```{r}
+pattern <- "\\b[A-Za-z]+ing\\b"
+ing <- str_detect(sentences, pattern)
+str_extract_all(sentences[ing], pattern, simplify = TRUE) %>% head(10)
+```
+ 
+ - All plurals.
+```{r}
+pattern <- "\\b[A-Za-z]{3,}[^s]s\\b"
+plural <- str_detect(sentences, pattern)
+str_extract(sentences[plural], pattern) %>% head(10)
+```
+
+### 14.4.4.1 Exercises
+*1. Find all words that come after a “number” like “one”, “two”, “three” etc. Pull out both the number and the word.*
+
+```{r}
+pattern <- "(one|two|three|four|five|six|seven|eight|nine|ten)\\s\\w+"
+number <- str_detect(sentences, pattern = pattern)
+str_extract(sentences[number], pattern) %>% head(10)
+```
+
+*2. Find all contractions. Separate out the pieces before and after the apostrophe.*
+I couldn't figure out how to keep the apostrophe using str_split()
+```{r}
+pattern <- "[A-Za-z]*'[a-z]+"
+x <- str_detect(sentences, pattern = pattern)
+seperated <- str_extract(sentences[x], pattern)
+unlist(str_split(seperated, pattern = "'"))
+unlist(strsplit(seperated, "(?=')", perl = T))
+```
+### 14.4.5.1 Exercises
+
+*1. Replace all forward slashes in a string with backslashes.*
+This would only work if I used 4 backslashed 
+
+```{r}
+x <- "h/e/l/l/o"
+x
+str_replace_all(x, "/", "\\")
+str_replace_all(x, "/", "\\\\")
+```
+
+*2. Implement a simple version of str_to_lower() using replace_all().*
+```{r}
+x <- "abcd"
+x
+str_replace_all(x, c("a" = "A", "b" = "B", "c" = "C", "d" = "D"))
+```
+
+*3. Switch the first and last letters in words. Which of those strings are still words?*
+```{r}
+
+str_replace(words, 
+            str_sub(words,1,1),str_sub(words, -1)) %>% 
+      head(10)
+
+```
+
+
+### 14.4.6.1 Exercises
+
+*1. Split up a string like "apples, pears, and bananas" into individual components.*
+```{r}
+x <- c("apples, pears, and bananas")
+str_split(x, ", +(and +)?")[[1]]
+```
+
+*2. Why is it better to split up by boundary("word") than " "?*
+Spliiting by boundary("word") will remove whitespace and any special characters and puncutation, where as " " will only remove a space.
+
+*3. What does splitting with an empty string ("") do? Experiment, and then read the documentation.*
+```{r}
+"a|b|c|d" %>% 
+  str_split("\\|") %>% 
+  .[[1]]
+
+"a|b|c|d" %>% 
+  str_split("") %>% 
+  .[[1]]
+```
+
+It seems to split the string by every character.
+
+# 14.5 Other types of pattern
+
+### 14.5.1 Exercises
+
+*1. How would you find all strings containing \ with regex() vs. with fixed()?*
+
+```{r}
+x <- "a\\b"
+str_subset(x, "\\\\")
+```
+
+*2. What are the five most common words in sentences?*
+```{r}
+all_words <- unlist(str_extract_all(sentences, boundary("word")))
+
+all_words %>% 
+      table() %>% 
+      sort(decreasing=T) %>% 
+      head(5)
+
+```
+
+
+# 14.6 Other uses of regular expressions
+
+# 14.7 stringi
+
+### 14.7.1 Exercises
+
+*1. Find the stringi functions that:*
+
+ - Count the number of words: 
+      - stri_count_boundaries(test, type="word")
+      - stri_count_words()
+ - Find duplicated strings: stri_duplicated()
+       - stri_duplicated(), stri_duplicated_any()
+ - Generate random text
+       - stri_rand_shuffle(str)
+       - stri_rand_lipsum(nparagraphs, start_lipsum = TRUE)
+
+*2. How do you control the language that stri_sort() uses for sorting?*
+stri_order(str, decreasing = FALSE, na_last = TRUE, opts_collator = NULL)
